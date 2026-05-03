@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MailPilot — Assistant Email IA</title>
+
+<!-- SEO -->
+<meta name="description" content="MailPilot lit, trie et rédige des réponses adaptées à chaque email — en temps réel. L'assistant email IA pour les petites entreprises qui veulent gagner du temps sans perdre le contrôle.">
+<meta name="keywords" content="email IA, assistant email, automatisation email, Gmail IA, Claude AI, MailPilot">
+<meta name="author" content="MailPilot">
+
+<!-- Open Graph / Facebook / LinkedIn -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="MailPilot — Votre boîte mail gérée automatiquement par l'IA">
+<meta property="og:description" content="MailPilot lit, trie et rédige des réponses adaptées à chaque email — en temps réel. Vous n'avez plus qu'à valider et envoyer.">
+<meta property="og:locale" content="fr_FR">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="MailPilot — Assistant Email IA">
+<meta name="twitter:description" content="Votre boîte mail gérée automatiquement par l'IA. Tri, classification et brouillons de réponse en temps réel.">
+
+<!-- Favicon SVG inline (enveloppe bleue MailPilot) -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230a0f1e'/%3E%3Cpath d='M14 22 L32 36 L50 22' stroke='%234f8ef7' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Crect x='14' y='20' width='36' height='24' rx='3' stroke='%234f8ef7' stroke-width='3' fill='none'/%3E%3C/svg%3E">
+
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0a0f1e;
+    --navy-light: #111827;
+    --accent: #4f8ef7;
+    --accent-2: #7c5cfc;
+    --white: #ffffff;
+    --gray: #94a3b8;
+    --card-bg: #131c2e;
+    --border: rgba(255,255,255,0.08);
+  }
+
+  body {
+    background: var(--navy);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 4rem;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    background: rgba(10,15,30,0.92);
+    backdrop-filter: blur(12px);
+    z-index: 100;
+  }
+
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.4rem;
+    letter-spacing: -0.5px;
+  }
+
+  .logo span { color: var(--accent); }
+
+  nav ul {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  nav a {
+    color: var(--gray);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+
+  nav a:hover { color: var(--white); }
+
+  .nav-cta {
+    background: var(--accent);
+    color: var(--white) !important;
+    padding: 0.5rem 1.2rem;
+    border-radius: 6px;
+  }
+
+  .hero {
+    text-align: center;
+    padding: 7rem 4rem 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(79,142,247,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(79,142,247,0.1);
+    border: 1px solid rgba(79,142,247,0.25);
+    color: var(--accent);
+    padding: 0.35rem 1rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+  }
+
+  .badge-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -1.5px;
+    margin-bottom: 1.5rem;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  h1 .highlight {
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-sub {
+    color: var(--gray);
+    font-size: 1.1rem;
+    max-width: 540px;
+    margin: 0 auto 2.5rem;
+    line-height: 1.7;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: white;
+    padding: 0.85rem 2rem;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: opacity 0.2s, transform 0.1s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--white);
+    padding: 0.85rem 2rem;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    text-decoration: none;
+    transition: border-color 0.2s, background 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-secondary:hover { border-color: rgba(255,255,255,0.25); background: rgba(255,255,255,0.04); }
+
+  .demo-box {
+    max-width: 760px;
+    margin: 4rem auto 0;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .demo-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0.75rem 1.2rem;
+    background: rgba(255,255,255,0.03);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot-red { background: #ff5f57; }
+  .dot-yellow { background: #febc2e; }
+  .dot-green { background: #28c840; }
+
+  .demo-content { padding: 2rem; }
+
+  .email-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.9rem 1rem;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+    border: 1px solid var(--border);
+    animation: fadeIn 0.5s ease forwards;
+    opacity: 0;
+  }
+
+  .email-item:nth-child(1) { animation-delay: 0.1s; }
+  .email-item:nth-child(2) { animation-delay: 0.3s; }
+  .email-item:nth-child(3) { animation-delay: 0.5s; }
+  .email-item:nth-child(4) { animation-delay: 0.7s; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .email-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+
+  .email-info { flex: 1; min-width: 0; }
+  .email-from { font-size: 0.85rem; font-weight: 500; color: var(--white); }
+  .email-subject { font-size: 0.8rem; color: var(--gray); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  .tag {
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    flex-shrink: 0;
+  }
+
+  .tag-urgent { background: rgba(239,68,68,0.15); color: #f87171; }
+  .tag-commercial { background: rgba(79,142,247,0.15); color: #7db8fa; }
+  .tag-info { background: rgba(16,185,129,0.15); color: #6ee7b7; }
+  .tag-inutile { background: rgba(148,163,184,0.1); color: #94a3b8; }
+
+  .ai-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.75rem;
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    margin: 4rem 0;
+  }
+
+  .stat {
+    background: var(--navy);
+    padding: 2.5rem 2rem;
+    text-align: center;
+  }
+
+  .stat-number {
+    font-family: 'Syne', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-label { font-size: 0.85rem; color: var(--gray); }
+
+  section {
+    padding: 5rem 4rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-tag {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+
+  h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+
+  .section-sub {
+    color: var(--gray);
+    font-size: 1rem;
+    max-width: 480px;
+    margin-bottom: 3rem;
+  }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .step {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+  }
+
+  .step-number {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+  }
+
+  .step-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: rgba(79,142,247,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    font-size: 18px;
+  }
+
+  .step h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  .step p { font-size: 0.85rem; color: var(--gray); line-height: 1.6; }
+
+  .features {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .feature {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .feature-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .feature h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+  }
+
+  .feature p { font-size: 0.82rem; color: var(--gray); line-height: 1.5; }
+
+  .targets {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+
+  .target {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem 1rem;
+    text-align: center;
+  }
+
+  .target-icon { font-size: 28px; margin-bottom: 0.75rem; }
+
+  .target h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+  }
+
+  .target p { font-size: 0.75rem; color: var(--gray); }
+
+  .cta-section {
+    text-align: center;
+    padding: 5rem 4rem;
+    border-top: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    bottom: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(124,92,252,0.1) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .cta-section h2 { margin-bottom: 1rem; }
+  .cta-section p { color: var(--gray); margin-bottom: 2.5rem; max-width: 440px; margin-left: auto; margin-right: auto; }
+
+  footer {
+    padding: 2rem 4rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  footer p { font-size: 0.8rem; color: var(--gray); }
+
+  .footer-links { display: flex; gap: 1.5rem; }
+  .footer-links a { font-size: 0.8rem; color: var(--gray); text-decoration: none; }
+  .footer-links a:hover { color: var(--white); }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    nav ul { display: none; }
+    .hero { padding: 4rem 1.5rem 3rem; }
+    section { padding: 3rem 1.5rem; }
+    .steps { grid-template-columns: 1fr; }
+    .features { grid-template-columns: 1fr; }
+    .targets { grid-template-columns: repeat(2, 1fr); }
+    .stats { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Mail<span>Pilot</span></div>
+  <ul>
+    <li><a href="#how">Comment ça marche</a></li>
+    <li><a href="#features">Fonctionnalités</a></li>
+    <li><a href="#targets">Pour qui</a></li>
+    <li><a href="#contact" class="nav-cta">Demander une démo</a></li>
+  </ul>
+</nav>
+
+<div class="hero">
+  <div class="badge">
+    <div class="badge-dot"></div>
+    Propulsé par Claude AI
+  </div>
+  <h1>Votre boîte mail gérée <span class="highlight">automatiquement</span> par l'IA</h1>
+  <p class="hero-sub">MailPilot lit, trie et rédige des réponses adaptées à chaque email — en temps réel. Vous n'avez plus qu'à valider et envoyer.</p>
+  <div class="hero-cta">
+    <a href="#contact" class="btn-primary">Demander une démo →</a>
+    <a href="#how" class="btn-secondary">Voir comment ça marche</a>
+  </div>
+
+  <div class="demo-box">
+    <div class="demo-bar">
+      <div class="dot dot-red"></div>
+      <div class="dot dot-yellow"></div>
+      <div class="dot dot-green"></div>
+      <span style="font-size:0.75rem; color: var(--gray); margin-left: 8px;">Gmail — Boîte de réception</span>
+    </div>
+    <div class="demo-content">
+      <div class="email-item">
+        <div class="email-avatar" style="background: rgba(239,68,68,0.15); color: #f87171;">MR</div>
+        <div class="email-info">
+          <div class="email-from">Marc Rousseau</div>
+          <div class="email-subject">Situation critique — système en panne, besoin urgent</div>
+        </div>
+        <span class="tag tag-urgent">Urgent</span>
+        <div class="ai-badge">✓ Brouillon prêt</div>
+      </div>
+      <div class="email-item">
+        <div class="email-avatar" style="background: rgba(79,142,247,0.15); color: #7db8fa;">SL</div>
+        <div class="email-info">
+          <div class="email-from">Sophie Laurent</div>
+          <div class="email-subject">Proposition de partenariat commercial</div>
+        </div>
+        <span class="tag tag-commercial">Commercial</span>
+        <div class="ai-badge">✓ Brouillon prêt</div>
+      </div>
+      <div class="email-item">
+        <div class="email-avatar" style="background: rgba(16,185,129,0.15); color: #6ee7b7;">TD</div>
+        <div class="email-info">
+          <div class="email-from">Thomas Dupont</div>
+          <div class="email-subject">Question sur vos horaires d'ouverture</div>
+        </div>
+        <span class="tag tag-info">Info</span>
+        <div class="ai-badge">✓ Brouillon prêt</div>
+      </div>
+      <div class="email-item">
+        <div class="email-avatar" style="background: rgba(148,163,184,0.1); color: #94a3b8;">NL</div>
+        <div class="email-info">
+          <div class="email-from">Newsletter</div>
+          <div class="email-subject">Offre spéciale — profitez de -50% ce week-end</div>
+        </div>
+        <span class="tag tag-inutile">Inutile</span>
+        <div style="font-size: 0.75rem; color: var(--gray);">Archivé</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="stats">
+  <div class="stat">
+    <div class="stat-number">90%</div>
+    <div class="stat-label">des emails traités automatiquement</div>
+  </div>
+  <div class="stat">
+    <div class="stat-number">2 min</div>
+    <div class="stat-label">temps de réponse moyen</div>
+  </div>
+  <div class="stat">
+    <div class="stat-number">24/7</div>
+    <div class="stat-label">disponibilité sans interruption</div>
+  </div>
+</div>
+
+<section id="how">
+  <div class="section-tag">Comment ça marche</div>
+  <h2>Simple à utiliser,<br>puissant dans les résultats</h2>
+  <p class="section-sub">En 3 étapes automatiques, chaque email reçoit une réponse adaptée à son contexte.</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-number">Étape 01</div>
+      <div class="step-icon">📥</div>
+      <h3>Réception et lecture</h3>
+      <p>MailPilot surveille votre boîte Gmail en permanence et lit chaque nouveau message dès son arrivée.</p>
+    </div>
+    <div class="step">
+      <div class="step-number">Étape 02</div>
+      <div class="step-icon">🧠</div>
+      <h3>Analyse et classification</h3>
+      <p>L'IA analyse le contenu et classe automatiquement le mail : Urgent, Commercial, Info ou Inutile.</p>
+    </div>
+    <div class="step">
+      <div class="step-number">Étape 03</div>
+      <div class="step-icon">✍️</div>
+      <h3>Réponse adaptée</h3>
+      <p>Un brouillon personnalisé est rédigé selon la catégorie et déposé dans votre boîte pour validation.</p>
+    </div>
+  </div>
+</section>
+
+<section id="features">
+  <div class="section-tag">Fonctionnalités</div>
+  <h2>Tout ce dont vous avez<br>besoin, rien de plus</h2>
+  <p class="section-sub">Conçu pour les petites entreprises qui veulent gagner du temps sans perdre le contrôle.</p>
+  <div class="features">
+    <div class="feature">
+      <div class="feature-icon" style="background: rgba(239,68,68,0.12);">🔴</div>
+      <div>
+        <h3>Traitement des urgences</h3>
+        <p>Les mails urgents sont détectés en priorité. Une réponse rassurante est rédigée immédiatement.</p>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon" style="background: rgba(79,142,247,0.12);">💼</div>
+      <div>
+        <h3>Réponses commerciales</h3>
+        <p>Chaque demande commerciale reçoit une réponse professionnelle et engageante, adaptée à votre secteur.</p>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon" style="background: rgba(16,185,129,0.12);">📋</div>
+      <div>
+        <h3>Gestion des demandes info</h3>
+        <p>Les questions reçoivent une confirmation immédiate et un engagement de réponse dans les meilleurs délais.</p>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon" style="background: rgba(124,92,252,0.12);">🏷️</div>
+      <div>
+        <h3>Étiquetage automatique</h3>
+        <p>Chaque email est étiqueté et classé dans Gmail. Votre boîte reste toujours organisée sans effort.</p>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon" style="background: rgba(251,191,36,0.12);">⚡</div>
+      <div>
+        <h3>Temps réel</h3>
+        <p>Le système tourne 24h/24, 7j/7. Vos clients reçoivent une réponse en quelques minutes, même la nuit.</p>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon" style="background: rgba(148,163,184,0.12);">🔒</div>
+      <div>
+        <h3>Vous gardez le contrôle</h3>
+        <p>MailPilot crée des brouillons, pas des envois automatiques. Vous validez chaque réponse avant envoi.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="targets">
+  <div class="section-tag">Pour qui</div>
+  <h2>Fait pour les petites<br>entreprises ambitieuses</h2>
+  <p class="section-sub">MailPilot s'adapte à tous les secteurs qui reçoivent un volume important d'emails.</p>
+  <div class="targets">
+    <div class="target">
+      <div class="target-icon">🏠</div>
+      <h3>Agences immobilières</h3>
+      <p>Demandes de visites, infos sur les biens</p>
+    </div>
+    <div class="target">
+      <div class="target-icon">📊</div>
+      <h3>Cabinets comptables</h3>
+      <p>Questions clients, documents, urgences</p>
+    </div>
+    <div class="target">
+      <div class="target-icon">🔧</div>
+      <h3>Artisans & PME</h3>
+      <p>Devis, disponibilités, suivi chantier</p>
+    </div>
+    <div class="target">
+      <div class="target-icon">⚖️</div>
+      <h3>Professions libérales</h3>
+      <p>Prises de RDV, demandes d'info</p>
+    </div>
+  </div>
+</section>
+
+<div class="cta-section" id="contact">
+  <div class="section-tag">Commencer</div>
+  <h2>Prêt à reprendre le contrôle<br>de votre boîte mail ?</h2>
+  <p>Demandez une démo gratuite. On configure MailPilot sur votre boîte en moins d'une heure.</p>
+  <div class="hero-cta">
+    <a href="mailto:contact@mailpilot.fr" class="btn-primary">Demander une démo gratuite →</a>
+    <a href="mailto:contact@mailpilot.fr" class="btn-secondary">Nous contacter</a>
+  </div>
+</div>
+
+<footer>
+  <div class="logo">Mail<span>Pilot</span></div>
+  <p style="color: var(--gray);">© 2026 MailPilot — Assistant email propulsé par l'IA</p>
+  <div class="footer-links">
+    <a href="#">Mentions légales</a>
+    <a href="#">Contact</a>
+  </div>
+</footer>
+
+</body>
+</html>
