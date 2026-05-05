@@ -5,558 +5,258 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MailPilot — Assistant Email IA</title>
 
-<!-- SEO -->
 <meta name="description" content="MailPilot lit, trie et rédige des réponses adaptées à chaque email — en temps réel. L'assistant email IA pour les petites entreprises qui veulent gagner du temps sans perdre le contrôle.">
 <meta name="keywords" content="email IA, assistant email, automatisation email, Gmail IA, Claude AI, MailPilot">
 <meta name="author" content="MailPilot">
 
-<!-- Open Graph / Facebook / LinkedIn -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="MailPilot — Votre boîte mail gérée automatiquement par l'IA">
 <meta property="og:description" content="MailPilot lit, trie et rédige des réponses adaptées à chaque email — en temps réel. Vous n'avez plus qu'à valider et envoyer.">
 <meta property="og:locale" content="fr_FR">
 
-<!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="MailPilot — Assistant Email IA">
 <meta name="twitter:description" content="Votre boîte mail gérée automatiquement par l'IA. Tri, classification et brouillons de réponse en temps réel.">
 
-<!-- Favicon SVG inline (logo MailPilot avec étincelle IA) -->
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230a0f1e'/%3E%3Crect x='12' y='18' width='40' height='28' rx='2' stroke='%234f8ef7' stroke-width='2.75' fill='none'/%3E%3Cpath d='M12 18 L32 36 L52 18' stroke='%234f8ef7' stroke-width='2.75' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M51 4 Q52 8 57 10 Q52 12 51 16 Q50 12 45 10 Q50 8 51 4 Z' fill='%237c5cfc'/%3E%3C/svg%3E">
 
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
-    --navy: #0a0f1e;
-    --navy-light: #111827;
-    --accent: #4f8ef7;
-    --accent-2: #7c5cfc;
-    --white: #ffffff;
-    --gray: #94a3b8;
-    --card-bg: #131c2e;
-    --border: rgba(255,255,255,0.08);
+    --navy: #0a0f1e; --navy-light: #131c2e; --navy-mid: #182238;
+    --accent: #4f8ef7; --accent-2: #7c5cfc;
+    --white: #ffffff; --gray: #94a3b8; --gray-dark: #64748b;
+    --card-bg: #131c2e; --border: rgba(255,255,255,0.08); --border-light: rgba(255,255,255,0.12);
+    --urgent: #ef4444; --commercial: #4f8ef7; --info: #10b981; --inutile: #94a3b8;
   }
-
-  body {
-    background: var(--navy);
-    color: var(--white);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 16px;
-    line-height: 1.6;
-    overflow-x: hidden;
-  }
-
-  nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.5rem 4rem;
-    border-bottom: 1px solid var(--border);
-    position: sticky;
-    top: 0;
-    background: rgba(10,15,30,0.92);
-    backdrop-filter: blur(12px);
-    z-index: 100;
-  }
-
-  .logo {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: 1.4rem;
-    letter-spacing: -0.5px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
+  html { scroll-behavior: smooth; }
+  body { background: var(--navy); color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 16px; line-height: 1.6; overflow-x: hidden; }
+  nav { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 4rem; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: rgba(10,15,30,0.92); backdrop-filter: blur(12px); z-index: 100; }
+  .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.4rem; letter-spacing: -0.5px; display: flex; align-items: center; gap: 10px; }
   .logo-icon { flex-shrink: 0; }
-
-  .logo span.brand-text { color: var(--white); }
-  .logo span.brand-accent { color: var(--accent); }
-
-  nav ul {
-    display: flex;
-    gap: 2.5rem;
-    list-style: none;
-  }
-
-  nav a {
-    color: var(--gray);
-    text-decoration: none;
-    font-size: 0.9rem;
-    font-weight: 500;
-    transition: color 0.2s;
-  }
-
+  .logo .brand-text { color: var(--white); }
+  .logo .brand-accent { color: var(--accent); }
+  nav ul { display: flex; gap: 2.5rem; list-style: none; align-items: center; }
+  nav a { color: var(--gray); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; cursor: pointer; }
   nav a:hover { color: var(--white); }
-
-  .nav-cta {
-    background: var(--accent);
-    color: var(--white) !important;
-    padding: 0.5rem 1.2rem;
-    border-radius: 6px;
-  }
-
-  .hero {
-    text-align: center;
-    padding: 7rem 4rem 5rem;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero::before {
-    content: '';
-    position: absolute;
-    top: -100px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, rgba(79,142,247,0.12) 0%, transparent 70%);
-    pointer-events: none;
-  }
-
-  .badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: rgba(79,142,247,0.1);
-    border: 1px solid rgba(79,142,247,0.25);
-    color: var(--accent);
-    padding: 0.35rem 1rem;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: 500;
-    margin-bottom: 1.5rem;
-  }
-
-  .badge-dot {
-    width: 6px;
-    height: 6px;
-    background: var(--accent);
-    border-radius: 50%;
-    animation: pulse 2s infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.4; }
-  }
-
-  h1 {
-    font-family: 'Syne', sans-serif;
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    font-weight: 800;
-    line-height: 1.1;
-    letter-spacing: -1.5px;
-    margin-bottom: 1.5rem;
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  h1 .highlight {
-    background: linear-gradient(135deg, var(--accent), var(--accent-2));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .hero-sub {
-    color: var(--gray);
-    font-size: 1.1rem;
-    max-width: 540px;
-    margin: 0 auto 2.5rem;
-    line-height: 1.7;
-  }
-
-  .hero-cta {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-
-  .btn-primary {
-    background: var(--accent);
-    color: white;
-    padding: 0.85rem 2rem;
-    border-radius: 8px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.95rem;
-    font-weight: 500;
-    border: none;
-    cursor: pointer;
-    text-decoration: none;
-    transition: opacity 0.2s, transform 0.1s;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
-
-  .btn-secondary {
-    background: transparent;
-    color: var(--white);
-    padding: 0.85rem 2rem;
-    border-radius: 8px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.95rem;
-    font-weight: 500;
-    border: 1px solid var(--border);
-    cursor: pointer;
-    text-decoration: none;
-    transition: border-color 0.2s, background 0.2s;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .btn-secondary:hover { border-color: rgba(255,255,255,0.25); background: rgba(255,255,255,0.04); }
-
-  .demo-box {
-    max-width: 760px;
-    margin: 4rem auto 0;
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    overflow: hidden;
-  }
-
-  .demo-bar {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 0.75rem 1.2rem;
-    background: rgba(255,255,255,0.03);
-    border-bottom: 1px solid var(--border);
-  }
-
+  .nav-cta { background: var(--accent); color: var(--white) !important; padding: 0.5rem 1.2rem; border-radius: 6px; }
+  .hero { text-align: center; padding: 7rem 4rem 5rem; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: -100px; left: 50%; transform: translateX(-50%); width: 600px; height: 600px; background: radial-gradient(circle, rgba(79,142,247,0.12) 0%, transparent 70%); pointer-events: none; }
+  .badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(79,142,247,0.1); border: 1px solid rgba(79,142,247,0.25); color: var(--accent); padding: 0.35rem 1rem; border-radius: 20px; font-size: 0.8rem; font-weight: 500; margin-bottom: 1.5rem; }
+  .badge-dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+  h1 { font-family: 'Syne', sans-serif; font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; line-height: 1.1; letter-spacing: -1.5px; margin-bottom: 1.5rem; max-width: 800px; margin-left: auto; margin-right: auto; }
+  h1 .highlight { background: linear-gradient(135deg, var(--accent), var(--accent-2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .hero-sub { color: var(--gray); font-size: 1.1rem; max-width: 540px; margin: 0 auto 2.5rem; line-height: 1.7; }
+  .hero-cta { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .btn-primary { background: var(--accent); color: white; padding: 0.85rem 2rem; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 600; border: none; cursor: pointer; text-decoration: none; transition: opacity 0.2s, transform 0.1s; display: inline-flex; align-items: center; gap: 8px; }
+  .btn-primary:hover:not(:disabled) { opacity: 0.9; transform: translateY(-1px); }
+  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+  .btn-secondary { background: transparent; color: var(--white); padding: 0.85rem 2rem; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 500; border: 1px solid var(--border); cursor: pointer; text-decoration: none; transition: border-color 0.2s, background 0.2s; display: inline-flex; align-items: center; gap: 8px; }
+  .btn-secondary:hover:not(:disabled) { border-color: rgba(255,255,255,0.25); background: rgba(255,255,255,0.04); }
+  .btn-secondary:disabled { opacity: 0.4; cursor: not-allowed; }
+  .pulse-dot { width: 7px; height: 7px; background: var(--white); border-radius: 50%; animation: pulse 1.5s infinite; }
+  .preview-box { max-width: 760px; margin: 4rem auto 0; background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+  .preview-bar { display: flex; align-items: center; gap: 8px; padding: 0.75rem 1.2rem; background: rgba(255,255,255,0.03); border-bottom: 1px solid var(--border); }
   .dot { width: 10px; height: 10px; border-radius: 50%; }
-  .dot-red { background: #ff5f57; }
-  .dot-yellow { background: #febc2e; }
-  .dot-green { background: #28c840; }
-
-  .demo-content { padding: 2rem; }
-
-  .email-item {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 0.9rem 1rem;
-    border-radius: 8px;
-    margin-bottom: 0.5rem;
-    border: 1px solid var(--border);
-    animation: fadeIn 0.5s ease forwards;
-    opacity: 0;
-  }
-
-  .email-item:nth-child(1) { animation-delay: 0.1s; }
-  .email-item:nth-child(2) { animation-delay: 0.3s; }
-  .email-item:nth-child(3) { animation-delay: 0.5s; }
-  .email-item:nth-child(4) { animation-delay: 0.7s; }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .email-avatar {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.75rem;
-    font-weight: 600;
-    flex-shrink: 0;
-  }
-
-  .email-info { flex: 1; min-width: 0; }
-  .email-from { font-size: 0.85rem; font-weight: 500; color: var(--white); }
-  .email-subject { font-size: 0.8rem; color: var(--gray); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-
-  .tag {
-    font-size: 0.7rem;
-    font-weight: 600;
-    padding: 0.2rem 0.6rem;
-    border-radius: 4px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    flex-shrink: 0;
-  }
-
+  .dot-red { background: #ff5f57; } .dot-yellow { background: #febc2e; } .dot-green { background: #28c840; }
+  .preview-content { padding: 2rem; }
+  .preview-email { display: flex; align-items: center; gap: 1rem; padding: 0.9rem 1rem; border-radius: 8px; margin-bottom: 0.5rem; border: 1px solid var(--border); animation: fadeIn 0.5s ease forwards; opacity: 0; }
+  .preview-email:nth-child(1) { animation-delay: 0.1s; }
+  .preview-email:nth-child(2) { animation-delay: 0.3s; }
+  .preview-email:nth-child(3) { animation-delay: 0.5s; }
+  .preview-email:nth-child(4) { animation-delay: 0.7s; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  .email-avatar { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 600; flex-shrink: 0; }
+  .preview-email .email-info { flex: 1; min-width: 0; }
+  .preview-email .email-from { font-size: 0.85rem; font-weight: 500; color: var(--white); }
+  .preview-email .email-subject { font-size: 0.8rem; color: var(--gray); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .tag { font-size: 0.7rem; font-weight: 600; padding: 0.2rem 0.6rem; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.5px; flex-shrink: 0; }
   .tag-urgent { background: rgba(239,68,68,0.15); color: #f87171; }
   .tag-commercial { background: rgba(79,142,247,0.15); color: #7db8fa; }
   .tag-info { background: rgba(16,185,129,0.15); color: #6ee7b7; }
   .tag-inutile { background: rgba(148,163,184,0.1); color: #94a3b8; }
-
-  .ai-badge {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 0.75rem;
-    color: var(--accent);
-    flex-shrink: 0;
-  }
-
-  .stats {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: var(--border);
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    margin: 4rem 0;
-  }
-
-  .stat {
-    background: var(--navy);
-    padding: 2.5rem 2rem;
-    text-align: center;
-  }
-
-  .stat-number {
-    font-family: 'Syne', sans-serif;
-    font-size: 2.5rem;
-    font-weight: 800;
-    color: var(--accent);
-    line-height: 1;
-    margin-bottom: 0.5rem;
-  }
-
+  .ai-badge { display: flex; align-items: center; gap: 6px; font-size: 0.75rem; color: var(--accent); flex-shrink: 0; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin: 4rem 0; }
+  .stat { background: var(--navy); padding: 2.5rem 2rem; text-align: center; }
+  .stat-number { font-family: 'Syne', sans-serif; font-size: 2.5rem; font-weight: 800; color: var(--accent); line-height: 1; margin-bottom: 0.5rem; }
   .stat-label { font-size: 0.85rem; color: var(--gray); }
-
-  section {
-    padding: 5rem 4rem;
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-
-  .section-tag {
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    color: var(--accent);
-    margin-bottom: 1rem;
-  }
-
-  h2 {
-    font-family: 'Syne', sans-serif;
-    font-size: clamp(1.8rem, 3vw, 2.5rem);
-    font-weight: 700;
-    letter-spacing: -0.5px;
-    line-height: 1.2;
-    margin-bottom: 1rem;
-  }
-
-  .section-sub {
-    color: var(--gray);
-    font-size: 1rem;
-    max-width: 480px;
-    margin-bottom: 3rem;
-  }
-
-  .steps {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-  }
-
-  .step {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.5rem;
-  }
-
-  .step-number {
-    font-family: 'Syne', sans-serif;
-    font-size: 0.7rem;
-    font-weight: 700;
-    color: var(--accent);
-    letter-spacing: 1px;
-    margin-bottom: 1rem;
-    text-transform: uppercase;
-  }
-
-  .step-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
-    background: rgba(79,142,247,0.1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 1rem;
-    font-size: 18px;
-  }
-
-  .step h3 {
-    font-family: 'Syne', sans-serif;
-    font-size: 1rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-  }
-
+  section { padding: 5rem 4rem; max-width: 1100px; margin: 0 auto; }
+  .section-tag { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; color: var(--accent); margin-bottom: 1rem; }
+  h2 { font-family: 'Syne', sans-serif; font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 700; letter-spacing: -0.5px; line-height: 1.2; margin-bottom: 1rem; }
+  .section-sub { color: var(--gray); font-size: 1rem; max-width: 520px; margin-bottom: 3rem; }
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .step { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; }
+  .step-number { font-family: 'Syne', sans-serif; font-size: 0.7rem; font-weight: 700; color: var(--accent); letter-spacing: 1px; margin-bottom: 1rem; text-transform: uppercase; }
+  .step-icon { width: 40px; height: 40px; border-radius: 10px; background: rgba(79,142,247,0.1); display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; font-size: 18px; }
+  .step h3 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; }
   .step p { font-size: 0.85rem; color: var(--gray); line-height: 1.6; }
-
-  .features {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-  }
-
-  .feature {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.5rem;
-    display: flex;
-    gap: 1rem;
-    align-items: flex-start;
-  }
-
-  .feature-icon {
-    width: 36px;
-    height: 36px;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    flex-shrink: 0;
-  }
-
-  .feature h3 {
-    font-family: 'Syne', sans-serif;
-    font-size: 0.95rem;
-    font-weight: 600;
-    margin-bottom: 0.3rem;
-  }
-
+  .features { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+  .feature { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; display: flex; gap: 1rem; align-items: flex-start; }
+  .feature-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+  .feature h3 { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 600; margin-bottom: 0.3rem; }
   .feature p { font-size: 0.82rem; color: var(--gray); line-height: 1.5; }
-
-  .targets {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
-  }
-
-  .target {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.5rem 1rem;
-    text-align: center;
-  }
-
+  .targets { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+  .target { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem 1rem; text-align: center; }
   .target-icon { font-size: 28px; margin-bottom: 0.75rem; }
-
-  .target h3 {
-    font-family: 'Syne', sans-serif;
-    font-size: 0.85rem;
-    font-weight: 600;
-    margin-bottom: 0.3rem;
-  }
-
+  .target h3 { font-family: 'Syne', sans-serif; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.3rem; }
   .target p { font-size: 0.75rem; color: var(--gray); }
-
-  .cta-section {
-    text-align: center;
-    padding: 5rem 4rem;
-    border-top: 1px solid var(--border);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .cta-section::before {
-    content: '';
-    position: absolute;
-    bottom: -100px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 500px;
-    height: 500px;
-    background: radial-gradient(circle, rgba(124,92,252,0.1) 0%, transparent 70%);
-    pointer-events: none;
-  }
-
+  #demo-section { max-width: 1280px; margin: 0 auto; padding: 5rem 4rem 6rem; position: relative; }
+  #demo-section::before { content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 700px; height: 500px; background: radial-gradient(circle, rgba(124,92,252,0.08) 0%, transparent 60%); pointer-events: none; z-index: 0; }
+  .demo-header-block { text-align: center; margin-bottom: 2.5rem; position: relative; z-index: 1; }
+  .demo-controls { display: flex; gap: 0.75rem; justify-content: center; margin-bottom: 2.5rem; flex-wrap: wrap; position: relative; z-index: 1; }
+  .demo-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 1.5rem; position: relative; z-index: 1; }
+  .panel, .ai-panel { background: var(--navy-light); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; min-height: 560px; }
+  .panel-header { display: flex; align-items: center; gap: 8px; padding: 0.85rem 1.2rem; background: rgba(255,255,255,0.025); border-bottom: 1px solid var(--border); flex-shrink: 0; }
+  .panel-title { font-size: 0.78rem; color: var(--gray); margin-left: 8px; font-weight: 500; }
+  .panel-status { margin-left: auto; font-size: 0.75rem; color: var(--gray-dark); display: flex; align-items: center; gap: 6px; }
+  .status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gray-dark); }
+  .status-dot.active { background: var(--info); animation: pulse 1.5s infinite; box-shadow: 0 0 8px rgba(16,185,129,0.5); }
+  .inbox { flex: 1; padding: 1rem; overflow-y: auto; }
+  .inbox-tabs { display: flex; gap: 0.25rem; padding: 0 0.5rem 1rem; border-bottom: 1px solid var(--border); margin-bottom: 1rem; }
+  .inbox-tab { padding: 0.4rem 0.85rem; font-size: 0.78rem; color: var(--gray); border-radius: 6px; cursor: default; display: flex; align-items: center; gap: 6px; }
+  .inbox-tab.active { background: rgba(79,142,247,0.12); color: var(--accent); }
+  .tab-count { background: rgba(255,255,255,0.06); padding: 0.05rem 0.35rem; border-radius: 10px; font-size: 0.7rem; font-weight: 600; }
+  .empty-state { text-align: center; color: var(--gray-dark); font-size: 0.85rem; padding: 3rem 1rem; font-style: italic; }
+  .email { display: flex; align-items: flex-start; gap: 0.85rem; padding: 0.85rem; border-radius: 8px; margin-bottom: 0.4rem; border: 1px solid var(--border); background: rgba(255,255,255,0.015); opacity: 0; transform: translateY(-12px); transition: opacity 0.4s ease, transform 0.4s ease, border-color 0.3s, background 0.3s; position: relative; }
+  .email.show { opacity: 1; transform: translateY(0); }
+  .email.processing { border-color: rgba(79,142,247,0.4); background: rgba(79,142,247,0.04); }
+  .email.processed { border-left-width: 3px; }
+  .email.cat-urgent.processed { border-left-color: var(--urgent); }
+  .email.cat-commercial.processed { border-left-color: var(--commercial); }
+  .email.cat-info.processed { border-left-color: var(--info); }
+  .email.cat-inutile.processed { border-left-color: var(--inutile); opacity: 0.55; }
+  .email .email-avatar { width: 38px; height: 38px; }
+  .email .email-info { flex: 1; min-width: 0; }
+  .email-row { display: flex; justify-content: space-between; gap: 8px; }
+  .email-from { font-size: 0.88rem; font-weight: 600; color: var(--white); }
+  .email-time { font-size: 0.72rem; color: var(--gray-dark); flex-shrink: 0; }
+  .email .email-subject { font-size: 0.82rem; color: var(--gray); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .email-meta { display: flex; align-items: center; gap: 8px; margin-top: 8px; flex-wrap: wrap; min-height: 18px; }
+  .email .tag { font-size: 0.66rem; opacity: 0; transform: scale(0.85); transition: opacity 0.3s, transform 0.3s; }
+  .email .tag.show { opacity: 1; transform: scale(1); }
+  .draft-indicator { font-size: 0.72rem; color: var(--accent); display: flex; align-items: center; gap: 4px; opacity: 0; transition: opacity 0.4s; }
+  .draft-indicator.show { opacity: 1; }
+  .draft-indicator::before { content: '✓'; font-weight: 700; }
+  .archived-tag { font-size: 0.7rem; color: var(--gray-dark); font-style: italic; opacity: 0; transition: opacity 0.4s; }
+  .archived-tag.show { opacity: 1; }
+  .ai-log { flex: 1; padding: 1rem 1.2rem; overflow-y: auto; display: flex; flex-direction: column; gap: 0.6rem; max-height: 340px; }
+  .log-entry { display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.82rem; color: var(--gray); opacity: 0; transform: translateX(-8px); transition: opacity 0.3s, transform 0.3s; line-height: 1.4; }
+  .log-entry.show { opacity: 1; transform: translateX(0); }
+  .log-time { font-family: 'DM Sans', monospace; font-size: 0.72rem; color: var(--gray-dark); flex-shrink: 0; margin-top: 1px; min-width: 42px; }
+  .log-icon { font-size: 0.95rem; flex-shrink: 0; margin-top: 1px; width: 18px; text-align: center; }
+  .log-text { flex: 1; }
+  .log-text strong { color: var(--white); font-weight: 600; }
+  .log-text .highlight-urgent { color: #f87171; font-weight: 600; }
+  .log-text .highlight-commercial { color: #7db8fa; font-weight: 600; }
+  .log-text .highlight-info { color: #6ee7b7; font-weight: 600; }
+  .log-text .highlight-inutile { color: #94a3b8; font-weight: 600; }
+  .draft-preview { border-top: 1px solid var(--border); padding: 1rem 1.2rem 1.2rem; background: rgba(255,255,255,0.015); flex-shrink: 0; min-height: 200px; display: flex; flex-direction: column; }
+  .draft-preview-header { font-size: 0.7rem; font-weight: 600; color: var(--gray-dark); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 6px; }
+  .draft-preview-header::before { content: '✍'; font-size: 0.85rem; }
+  .draft-content { background: var(--navy); border: 1px solid var(--border); border-radius: 8px; padding: 0.85rem 1rem; font-size: 0.82rem; line-height: 1.55; color: var(--white); flex: 1; white-space: pre-wrap; font-family: 'DM Sans', sans-serif; min-height: 130px; position: relative; }
+  .draft-empty { color: var(--gray-dark); font-style: italic; font-size: 0.8rem; }
+  .typing-cursor { display: inline-block; width: 2px; height: 1em; background: var(--accent); vertical-align: text-bottom; animation: blink 0.8s infinite; margin-left: 1px; }
+  @keyframes blink { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0; } }
+  .completion-stats { display: none; background: linear-gradient(135deg, rgba(79,142,247,0.1), rgba(124,92,252,0.08)); border: 1px solid rgba(79,142,247,0.25); border-radius: 14px; padding: 2rem; margin-top: 2rem; text-align: center; }
+  .completion-stats.show { display: block; animation: fadeIn 0.6s ease; }
+  .completion-title { font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 700; margin-bottom: 1rem; }
+  .completion-numbers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; max-width: 600px; margin: 1.5rem auto; }
+  .stat-item .num { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; color: var(--accent); line-height: 1; }
+  .stat-item .lbl { font-size: 0.78rem; color: var(--gray); margin-top: 0.4rem; }
+  .completion-cta { margin-top: 1.5rem; display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+  .cta-section { text-align: center; padding: 5rem 4rem; border-top: 1px solid var(--border); position: relative; overflow: hidden; }
+  .cta-section::before { content: ''; position: absolute; bottom: -100px; left: 50%; transform: translateX(-50%); width: 500px; height: 500px; background: radial-gradient(circle, rgba(124,92,252,0.1) 0%, transparent 70%); pointer-events: none; }
   .cta-section h2 { margin-bottom: 1rem; }
   .cta-section p { color: var(--gray); margin-bottom: 2.5rem; max-width: 440px; margin-left: auto; margin-right: auto; }
-
-  footer {
-    padding: 2rem 4rem;
-    border-top: 1px solid var(--border);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
+  footer { padding: 2rem 4rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
   footer p { font-size: 0.8rem; color: var(--gray); }
-
   .footer-links { display: flex; gap: 1.5rem; }
   .footer-links a { font-size: 0.8rem; color: var(--gray); text-decoration: none; }
   .footer-links a:hover { color: var(--white); }
-
+  @media (max-width: 880px) {
+    .demo-grid { grid-template-columns: 1fr; }
+    #demo-section { padding: 3rem 1.5rem; }
+    .completion-numbers { grid-template-columns: 1fr; gap: 1rem; }
+    .panel, .ai-panel { min-height: auto; }
+  }
   @media (max-width: 768px) {
-    nav { padding: 1rem 1.5rem; }
-    nav ul { display: none; }
-    .hero { padding: 4rem 1.5rem 3rem; }
-    section { padding: 3rem 1.5rem; }
-    .steps { grid-template-columns: 1fr; }
-    .features { grid-template-columns: 1fr; }
+    nav { padding: 1rem 1.5rem; } nav ul { display: none; }
+    .hero { padding: 4rem 1.5rem 3rem; } section { padding: 3rem 1.5rem; }
+    .steps, .features { grid-template-columns: 1fr; }
     .targets { grid-template-columns: repeat(2, 1fr); }
     .stats { grid-template-columns: 1fr; }
     footer { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+  /* === MODAL MENTIONS LÉGALES === */
+  .modal-overlay { position: fixed; inset: 0; background: rgba(5, 8, 18, 0.85); backdrop-filter: blur(8px); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 2rem; opacity: 0; transition: opacity 0.25s ease; }
+  .modal-overlay.show { display: flex; opacity: 1; }
+  .modal-content { background: var(--navy-light); border: 1px solid var(--border); border-radius: 16px; max-width: 760px; width: 100%; max-height: 88vh; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 30px 90px rgba(0,0,0,0.5); transform: translateY(20px); transition: transform 0.3s ease; }
+  .modal-overlay.show .modal-content { transform: translateY(0); }
+  .modal-head { display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 2rem; border-bottom: 1px solid var(--border); flex-shrink: 0; background: rgba(255,255,255,0.02); }
+  .modal-head h2 { font-size: 1.3rem; font-weight: 700; margin: 0; }
+  .modal-close { background: transparent; border: 1px solid var(--border); color: var(--gray); width: 32px; height: 32px; border-radius: 8px; cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+  .modal-close:hover { color: var(--white); border-color: rgba(255,255,255,0.25); background: rgba(255,255,255,0.04); }
+  .modal-body { padding: 2rem; overflow-y: auto; line-height: 1.7; }
+  .modal-body h3 { font-family: 'Syne', sans-serif; font-size: 1.05rem; font-weight: 700; margin: 1.8rem 0 0.6rem; color: var(--white); }
+  .modal-body h3:first-child { margin-top: 0; }
+  .modal-body p { color: var(--gray); margin-bottom: 0.8rem; font-size: 0.92rem; }
+  .modal-body p strong { color: var(--white); font-weight: 500; }
+  .modal-body a { color: var(--accent); text-decoration: none; }
+  .modal-body a:hover { opacity: 0.8; }
+  .modal-info-block { background: rgba(255,255,255,0.025); border: 1px solid var(--border); border-radius: 10px; padding: 1.1rem 1.3rem; margin: 0.6rem 0 1rem; font-size: 0.9rem; }
+  .modal-info-block p { margin-bottom: 0.3rem; }
+  .modal-info-block p:last-child { margin-bottom: 0; }
+  .modal-notice { background: rgba(251,191,36,0.06); border: 1px solid rgba(251,191,36,0.22); border-radius: 10px; padding: 1rem 1.2rem; margin: 0 0 1.5rem; color: #fcd34d; font-size: 0.85rem; }
+  .modal-notice strong { color: #fde68a; }
+  .modal-update { color: var(--gray-dark); font-size: 0.78rem; margin-bottom: 1.2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
+  .footer-links a { background: none; border: none; color: var(--gray); text-decoration: none; font-size: 0.8rem; cursor: pointer; padding: 0; font-family: inherit; }
+  .footer-links a:hover { color: var(--white); }
+  @media (max-width: 600px) {
+    .modal-overlay { padding: 1rem; }
+    .modal-head { padding: 1rem 1.5rem; }
+    .modal-body { padding: 1.5rem; }
   }
 </style>
 </head>
 <body>
 
 <nav>
-  <div class="logo">
+  <a href="#top" class="logo" style="text-decoration: none;">
     <svg class="logo-icon" viewBox="0 0 64 64" width="30" height="30" aria-hidden="true">
       <rect x="12" y="18" width="40" height="28" rx="2" stroke="#4f8ef7" stroke-width="2.75" fill="none"/>
       <path d="M12 18 L32 36 L52 18" stroke="#4f8ef7" stroke-width="2.75" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
       <path d="M51 4 Q52 8 57 10 Q52 12 51 16 Q50 12 45 10 Q50 8 51 4 Z" fill="#7c5cfc"/>
     </svg>
     <span><span class="brand-text">Mail</span><span class="brand-accent">Pilot</span></span>
-  </div>
+  </a>
   <ul>
     <li><a href="#how">Comment ça marche</a></li>
     <li><a href="#features">Fonctionnalités</a></li>
     <li><a href="#targets">Pour qui</a></li>
-    <li><a href="#contact" class="nav-cta">Demander une démo</a></li>
+    <li><a href="#demo-section" class="nav-cta" onclick="goLaunchDemo(event)">Lancer la démo</a></li>
   </ul>
 </nav>
 
+<div id="top"></div>
+
 <div class="hero">
-  <div class="badge">
-    <div class="badge-dot"></div>
-    Propulsé par Claude AI
-  </div>
+  <div class="badge"><div class="badge-dot"></div>Propulsé par Claude AI</div>
   <h1>Votre boîte mail gérée <span class="highlight">automatiquement</span> par l'IA</h1>
   <p class="hero-sub">MailPilot lit, trie et rédige des réponses adaptées à chaque email — en temps réel. Vous n'avez plus qu'à valider et envoyer.</p>
   <div class="hero-cta">
-    <a href="#contact" class="btn-primary">Demander une démo →</a>
+    <a href="#demo-section" class="btn-primary" onclick="goLaunchDemo(event)"><span class="pulse-dot"></span>Lancer la démo</a>
     <a href="#how" class="btn-secondary">Voir comment ça marche</a>
   </div>
 
-  <div class="demo-box">
-    <div class="demo-bar">
-      <div class="dot dot-red"></div>
-      <div class="dot dot-yellow"></div>
-      <div class="dot dot-green"></div>
+  <div class="preview-box">
+    <div class="preview-bar">
+      <div class="dot dot-red"></div><div class="dot dot-yellow"></div><div class="dot dot-green"></div>
       <span style="font-size:0.75rem; color: var(--gray); margin-left: 8px;">Gmail — Boîte de réception</span>
     </div>
-    <div class="demo-content">
-      <div class="email-item">
+    <div class="preview-content">
+      <div class="preview-email">
         <div class="email-avatar" style="background: rgba(239,68,68,0.15); color: #f87171;">MR</div>
         <div class="email-info">
           <div class="email-from">Marc Rousseau</div>
@@ -565,7 +265,7 @@
         <span class="tag tag-urgent">Urgent</span>
         <div class="ai-badge">✓ Brouillon prêt</div>
       </div>
-      <div class="email-item">
+      <div class="preview-email">
         <div class="email-avatar" style="background: rgba(79,142,247,0.15); color: #7db8fa;">SL</div>
         <div class="email-info">
           <div class="email-from">Sophie Laurent</div>
@@ -574,7 +274,7 @@
         <span class="tag tag-commercial">Commercial</span>
         <div class="ai-badge">✓ Brouillon prêt</div>
       </div>
-      <div class="email-item">
+      <div class="preview-email">
         <div class="email-avatar" style="background: rgba(16,185,129,0.15); color: #6ee7b7;">TD</div>
         <div class="email-info">
           <div class="email-from">Thomas Dupont</div>
@@ -583,7 +283,7 @@
         <span class="tag tag-info">Info</span>
         <div class="ai-badge">✓ Brouillon prêt</div>
       </div>
-      <div class="email-item">
+      <div class="preview-email">
         <div class="email-avatar" style="background: rgba(148,163,184,0.1); color: #94a3b8;">NL</div>
         <div class="email-info">
           <div class="email-from">Newsletter</div>
@@ -597,18 +297,9 @@
 </div>
 
 <div class="stats">
-  <div class="stat">
-    <div class="stat-number">90%</div>
-    <div class="stat-label">des emails traités automatiquement</div>
-  </div>
-  <div class="stat">
-    <div class="stat-number">2 min</div>
-    <div class="stat-label">temps de réponse moyen</div>
-  </div>
-  <div class="stat">
-    <div class="stat-number">24/7</div>
-    <div class="stat-label">disponibilité sans interruption</div>
-  </div>
+  <div class="stat"><div class="stat-number">90%</div><div class="stat-label">des emails traités automatiquement</div></div>
+  <div class="stat"><div class="stat-number">2 min</div><div class="stat-label">temps de réponse moyen</div></div>
+  <div class="stat"><div class="stat-number">24/7</div><div class="stat-label">disponibilité sans interruption</div></div>
 </div>
 
 <section id="how">
@@ -616,74 +307,82 @@
   <h2>Simple à utiliser,<br>puissant dans les résultats</h2>
   <p class="section-sub">En 3 étapes automatiques, chaque email reçoit une réponse adaptée à son contexte.</p>
   <div class="steps">
-    <div class="step">
-      <div class="step-number">Étape 01</div>
-      <div class="step-icon">📥</div>
-      <h3>Réception et lecture</h3>
-      <p>MailPilot surveille votre boîte Gmail en permanence et lit chaque nouveau message dès son arrivée.</p>
-    </div>
-    <div class="step">
-      <div class="step-number">Étape 02</div>
-      <div class="step-icon">🧠</div>
-      <h3>Analyse et classification</h3>
-      <p>L'IA analyse le contenu et classe automatiquement le mail : Urgent, Commercial, Info ou Inutile.</p>
-    </div>
-    <div class="step">
-      <div class="step-number">Étape 03</div>
-      <div class="step-icon">✍️</div>
-      <h3>Réponse adaptée</h3>
-      <p>Un brouillon personnalisé est rédigé selon la catégorie et déposé dans votre boîte pour validation.</p>
-    </div>
+    <div class="step"><div class="step-number">Étape 01</div><div class="step-icon">📥</div><h3>Réception et lecture</h3><p>MailPilot surveille votre boîte Gmail en permanence et lit chaque nouveau message dès son arrivée.</p></div>
+    <div class="step"><div class="step-number">Étape 02</div><div class="step-icon">🧠</div><h3>Analyse et classification</h3><p>L'IA analyse le contenu et classe automatiquement le mail : Urgent, Commercial, Info ou Inutile.</p></div>
+    <div class="step"><div class="step-number">Étape 03</div><div class="step-icon">✍️</div><h3>Réponse adaptée</h3><p>Un brouillon personnalisé est rédigé selon la catégorie et déposé dans votre boîte pour validation.</p></div>
   </div>
 </section>
+
+<div id="demo-section">
+  <div class="demo-header-block">
+    <div class="section-tag" style="margin-bottom: 1rem;">Démo en direct</div>
+    <h2>Voyez MailPilot <span class="highlight" style="background: linear-gradient(135deg, var(--accent), var(--accent-2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">en action</span></h2>
+    <p class="section-sub" style="max-width: 580px; margin: 1rem auto 0;">Cliquez sur le bouton et regardez l'IA recevoir, classer et rédiger une réponse pour chaque email — en temps réel.</p>
+  </div>
+
+  <div class="demo-controls">
+    <button id="startBtn" class="btn-primary"><span class="pulse-dot"></span>Lancer la démo</button>
+    <button id="resetBtn" class="btn-secondary" disabled>↻ Recommencer</button>
+  </div>
+
+  <div class="demo-grid">
+    <div class="panel">
+      <div class="panel-header">
+        <div class="dot dot-red"></div><div class="dot dot-yellow"></div><div class="dot dot-green"></div>
+        <span class="panel-title">Gmail — Boîte de réception</span>
+        <div class="panel-status"><span id="inboxStatus">En attente</span><div class="status-dot" id="inboxDot"></div></div>
+      </div>
+      <div class="inbox">
+        <div class="inbox-tabs"><div class="inbox-tab active">📥 Principal <span class="tab-count" id="tabCount">0</span></div></div>
+        <div id="emailList"><div class="empty-state">Aucun email pour l'instant. Cliquez sur "Lancer la démo" pour voir MailPilot en action.</div></div>
+      </div>
+    </div>
+
+    <div class="ai-panel">
+      <div class="panel-header">
+        <svg viewBox="0 0 64 64" width="20" height="20" aria-hidden="true" style="margin-right: 4px;">
+          <rect x="12" y="18" width="40" height="28" rx="2" stroke="#4f8ef7" stroke-width="3" fill="none"/>
+          <path d="M12 18 L32 36 L52 18" stroke="#4f8ef7" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M51 4 Q52 8 57 10 Q52 12 51 16 Q50 12 45 10 Q50 8 51 4 Z" fill="#7c5cfc"/>
+        </svg>
+        <span class="panel-title" style="margin-left: 0;">MailPilot AI — Activité en direct</span>
+        <div class="panel-status"><span id="aiStatus">Inactif</span><div class="status-dot" id="aiDot"></div></div>
+      </div>
+      <div class="ai-log" id="aiLog">
+        <div style="text-align: center; color: var(--gray-dark); font-size: 0.85rem; padding: 2rem 1rem; font-style: italic;">En attente du premier email...</div>
+      </div>
+      <div class="draft-preview">
+        <div class="draft-preview-header">Brouillon en cours de rédaction</div>
+        <div class="draft-content" id="draftContent"><span class="draft-empty">Le brouillon généré par l'IA s'affichera ici en temps réel.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="completion-stats" id="completionStats">
+    <div class="completion-title">✨ Démo terminée</div>
+    <p style="color: var(--gray); max-width: 480px; margin: 0 auto;">Voilà ce que MailPilot fait pour vous, sur chaque email reçu, 24h/24, sans intervention.</p>
+    <div class="completion-numbers">
+      <div class="stat-item"><div class="num" id="finalEmailCount">0</div><div class="lbl">emails traités</div></div>
+      <div class="stat-item"><div class="num" id="finalDraftCount">0</div><div class="lbl">brouillons prêts à valider</div></div>
+      <div class="stat-item"><div class="num" id="finalTime">0s</div><div class="lbl">temps total</div></div>
+    </div>
+    <div class="completion-cta">
+      <button class="btn-primary" onclick="resetDemo()">↻ Relancer la démo</button>
+    </div>
+  </div>
+</div>
 
 <section id="features">
   <div class="section-tag">Fonctionnalités</div>
   <h2>Tout ce dont vous avez<br>besoin, rien de plus</h2>
   <p class="section-sub">Conçu pour les petites entreprises qui veulent gagner du temps sans perdre le contrôle.</p>
   <div class="features">
-    <div class="feature">
-      <div class="feature-icon" style="background: rgba(239,68,68,0.12);">🔴</div>
-      <div>
-        <h3>Traitement des urgences</h3>
-        <p>Les mails urgents sont détectés en priorité. Une réponse rassurante est rédigée immédiatement.</p>
-      </div>
-    </div>
-    <div class="feature">
-      <div class="feature-icon" style="background: rgba(79,142,247,0.12);">💼</div>
-      <div>
-        <h3>Réponses commerciales</h3>
-        <p>Chaque demande commerciale reçoit une réponse professionnelle et engageante, adaptée à votre secteur.</p>
-      </div>
-    </div>
-    <div class="feature">
-      <div class="feature-icon" style="background: rgba(16,185,129,0.12);">📋</div>
-      <div>
-        <h3>Gestion des demandes info</h3>
-        <p>Les questions reçoivent une confirmation immédiate et un engagement de réponse dans les meilleurs délais.</p>
-      </div>
-    </div>
-    <div class="feature">
-      <div class="feature-icon" style="background: rgba(124,92,252,0.12);">🏷️</div>
-      <div>
-        <h3>Étiquetage automatique</h3>
-        <p>Chaque email est étiqueté et classé dans Gmail. Votre boîte reste toujours organisée sans effort.</p>
-      </div>
-    </div>
-    <div class="feature">
-      <div class="feature-icon" style="background: rgba(251,191,36,0.12);">⚡</div>
-      <div>
-        <h3>Temps réel</h3>
-        <p>Le système tourne 24h/24, 7j/7. Vos clients reçoivent une réponse en quelques minutes, même la nuit.</p>
-      </div>
-    </div>
-    <div class="feature">
-      <div class="feature-icon" style="background: rgba(148,163,184,0.12);">🔒</div>
-      <div>
-        <h3>Vous gardez le contrôle</h3>
-        <p>MailPilot crée des brouillons, pas des envois automatiques. Vous validez chaque réponse avant envoi.</p>
-      </div>
-    </div>
+    <div class="feature"><div class="feature-icon" style="background: rgba(239,68,68,0.12);">🔴</div><div><h3>Traitement des urgences</h3><p>Les mails urgents sont détectés en priorité. Une réponse rassurante est rédigée immédiatement.</p></div></div>
+    <div class="feature"><div class="feature-icon" style="background: rgba(79,142,247,0.12);">💼</div><div><h3>Réponses commerciales</h3><p>Chaque demande commerciale reçoit une réponse professionnelle et engageante, adaptée à votre secteur.</p></div></div>
+    <div class="feature"><div class="feature-icon" style="background: rgba(16,185,129,0.12);">📋</div><div><h3>Gestion des demandes info</h3><p>Les questions reçoivent une confirmation immédiate et un engagement de réponse dans les meilleurs délais.</p></div></div>
+    <div class="feature"><div class="feature-icon" style="background: rgba(124,92,252,0.12);">🏷️</div><div><h3>Étiquetage automatique</h3><p>Chaque email est étiqueté et classé dans Gmail. Votre boîte reste toujours organisée sans effort.</p></div></div>
+    <div class="feature"><div class="feature-icon" style="background: rgba(251,191,36,0.12);">⚡</div><div><h3>Temps réel</h3><p>Le système tourne 24h/24, 7j/7. Vos clients reçoivent une réponse en quelques minutes, même la nuit.</p></div></div>
+    <div class="feature"><div class="feature-icon" style="background: rgba(148,163,184,0.12);">🔒</div><div><h3>Vous gardez le contrôle</h3><p>MailPilot crée des brouillons, pas des envois automatiques. Vous validez chaque réponse avant envoi.</p></div></div>
   </div>
 </section>
 
@@ -692,36 +391,20 @@
   <h2>Fait pour les petites<br>entreprises ambitieuses</h2>
   <p class="section-sub">MailPilot s'adapte à tous les secteurs qui reçoivent un volume important d'emails.</p>
   <div class="targets">
-    <div class="target">
-      <div class="target-icon">🏠</div>
-      <h3>Agences immobilières</h3>
-      <p>Demandes de visites, infos sur les biens</p>
-    </div>
-    <div class="target">
-      <div class="target-icon">📊</div>
-      <h3>Cabinets comptables</h3>
-      <p>Questions clients, documents, urgences</p>
-    </div>
-    <div class="target">
-      <div class="target-icon">🔧</div>
-      <h3>Artisans & PME</h3>
-      <p>Devis, disponibilités, suivi chantier</p>
-    </div>
-    <div class="target">
-      <div class="target-icon">⚖️</div>
-      <h3>Professions libérales</h3>
-      <p>Prises de RDV, demandes d'info</p>
-    </div>
+    <div class="target"><div class="target-icon">🏠</div><h3>Agences immobilières</h3><p>Demandes de visites, infos sur les biens</p></div>
+    <div class="target"><div class="target-icon">📊</div><h3>Cabinets comptables</h3><p>Questions clients, documents, urgences</p></div>
+    <div class="target"><div class="target-icon">🔧</div><h3>Artisans & PME</h3><p>Devis, disponibilités, suivi chantier</p></div>
+    <div class="target"><div class="target-icon">⚖️</div><h3>Professions libérales</h3><p>Prises de RDV, demandes d'info</p></div>
   </div>
 </section>
 
 <div class="cta-section" id="contact">
   <div class="section-tag">Commencer</div>
   <h2>Prêt à reprendre le contrôle<br>de votre boîte mail ?</h2>
-  <p>Demandez une démo gratuite. On configure MailPilot sur votre boîte en moins d'une heure.</p>
+  <p>Lancez la démo pour voir MailPilot en action, ou contactez-nous pour une installation sur votre vraie boîte mail en moins d'une heure.</p>
   <div class="hero-cta">
-    <a href="mailto:mailpilot.contact86@gmail.com?subject=Demande%20de%20d%C3%A9mo%20MailPilot&body=Bonjour%2C%0A%0AJe%20souhaiterais%20une%20d%C3%A9mo%20de%20MailPilot.%0A%0ANom%20%3A%0AEntreprise%20%3A%0ASecteur%20d%27activit%C3%A9%20%3A%0AVolume%20d%27emails%20re%C3%A7us%20par%20jour%20%3A%0AT%C3%A9l%C3%A9phone%20%3A%0A%0AMerci%20%21" class="btn-primary">Demander une démo gratuite →</a>
-    <a href="mailto:mailpilot.contact86@gmail.com" class="btn-secondary">Nous contacter</a>
+    <a href="#demo-section" class="btn-primary" onclick="goLaunchDemo(event)"><span class="pulse-dot"></span>Lancer la démo</a>
+    <a href="mailto:mailpilot.contact86@gmail.com?subject=Demande%20d%27installation%20MailPilot&body=Bonjour%2C%0A%0AJ%27ai%20test%C3%A9%20la%20d%C3%A9mo%20et%20je%20souhaiterais%20une%20installation%20sur%20ma%20bo%C3%AEte%20mail.%0A%0ANom%20%3A%0AEntreprise%20%3A%0ASecteur%20d%27activit%C3%A9%20%3A%0AVolume%20d%27emails%20re%C3%A7us%20par%20jour%20%3A%0AT%C3%A9l%C3%A9phone%20%3A%0A%0AMerci%20%21" class="btn-secondary">Nous contacter</a>
   </div>
 </div>
 
@@ -736,10 +419,251 @@
   </div>
   <p style="color: var(--gray);">© 2026 MailPilot — Assistant email propulsé par l'IA</p>
   <div class="footer-links">
-    <a href="mentions-legales.html">Mentions légales</a>
+    <a href="#" onclick="openLegal(event)">Mentions légales</a>
     <a href="mailto:mailpilot.contact86@gmail.com">Contact</a>
   </div>
 </footer>
+
+<!-- ===== MODAL MENTIONS LÉGALES ===== -->
+<div class="modal-overlay" id="legalModal" onclick="closeLegal(event)">
+  <div class="modal-content" onclick="event.stopPropagation()">
+    <div class="modal-head">
+      <h2>Mentions légales</h2>
+      <button class="modal-close" onclick="closeLegal()" aria-label="Fermer">×</button>
+    </div>
+    <div class="modal-body">
+      <p class="modal-update">Dernière mise à jour : 5 mai 2026</p>
+
+      <div class="modal-notice">
+        <strong>Statut du projet :</strong> MailPilot est actuellement en phase de test et de développement. Le service n'est pas encore commercialisé. Les démos proposées sont gratuites et sans engagement.
+      </div>
+
+      <h3>1. Éditeur du site</h3>
+      <p>Le présent site <strong>mailpilote.vercel.app</strong> est édité à titre personnel, dans le cadre d'un projet en phase de test, par :</p>
+      <div class="modal-info-block">
+        <p><strong>Thomas RIBREAU</strong></p>
+        <p>6 rue du Sanital</p>
+        <p>86100 Châtellerault, France</p>
+        <p>Téléphone : <a href="tel:+33659512712">06 59 51 27 12</a></p>
+        <p>Email : <a href="mailto:mailpilot.contact86@gmail.com">mailpilot.contact86@gmail.com</a></p>
+      </div>
+
+      <h3>2. Directeur de la publication</h3>
+      <p>Le directeur de la publication du Site est <strong>Thomas RIBREAU</strong>.</p>
+
+      <h3>3. Hébergement</h3>
+      <p>Le Site est hébergé par :</p>
+      <div class="modal-info-block">
+        <p><strong>Vercel Inc.</strong></p>
+        <p>440 N Barranca Ave #4133</p>
+        <p>Covina, CA 91723, États-Unis</p>
+        <p>Site : <a href="https://vercel.com" target="_blank" rel="noopener">vercel.com</a></p>
+      </div>
+
+      <h3>4. Propriété intellectuelle</h3>
+      <p>L'ensemble des éléments présents sur le Site (textes, graphismes, logo, code) est la propriété exclusive de Thomas RIBREAU. Toute reproduction non autorisée est interdite et sanctionnée par les articles L.335-2 et suivants du Code de la propriété intellectuelle. La marque « MailPilot » et son logo sont la propriété de Thomas RIBREAU.</p>
+
+      <h3>5. Données personnelles (RGPD)</h3>
+      <p>Le Site ne collecte aucune donnée personnelle de manière automatique. Aucun cookie de tracking n'est utilisé.</p>
+      <p>Lorsque vous nous contactez par email, les données communiquées (nom, prénom, email, téléphone, entreprise) sont utilisées <strong>uniquement</strong> pour répondre à votre demande. Elles ne sont jamais transmises à des tiers.</p>
+      <p>Conformément au RGPD et à la loi « Informatique et Libertés », vous disposez d'un droit d'accès, rectification, opposition, suppression, limitation et portabilité. Pour exercer ces droits : <a href="mailto:mailpilot.contact86@gmail.com">mailpilot.contact86@gmail.com</a>.</p>
+      <p>Les données collectées sont conservées 3 ans maximum à compter du dernier contact.</p>
+
+      <h3>6. Cookies</h3>
+      <p>Le Site n'utilise aucun cookie publicitaire ni de mesure d'audience nécessitant un consentement préalable. Seuls des cookies techniques strictement nécessaires peuvent être déposés par l'hébergeur Vercel.</p>
+
+      <h3>7. Limitation de responsabilité</h3>
+      <p>Les informations présentées sur le Site le sont à titre indicatif. Thomas RIBREAU s'efforce d'assurer leur exactitude sans pour autant garantir l'absence d'erreurs. Le service MailPilot étant en phase de développement, aucun engagement contractuel de niveau de service (SLA) n'est garanti à ce stade.</p>
+
+      <h3>8. Droit applicable</h3>
+      <p>Les présentes mentions légales sont soumises au droit français. En cas de litige, les tribunaux français seront seuls compétents.</p>
+
+      <h3>9. Contact</h3>
+      <p>Pour toute question : <a href="mailto:mailpilot.contact86@gmail.com">mailpilot.contact86@gmail.com</a>.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+const emails = [
+  { id: 1, from: 'Marc Rousseau', initials: 'MR', avatarColor: 'rgba(239,68,68,0.18)', avatarText: '#f87171', time: '09:42', subject: 'URGENT — Système hors service depuis ce matin', category: 'urgent', categoryLabel: 'Urgent',
+    draft: `Bonjour Marc,\n\nJe viens de prendre connaissance de votre message et je comprends l'urgence de la situation.\n\nNotre équipe technique est immédiatement mobilisée pour diagnostiquer le problème. Je vous appelle dans les 15 prochaines minutes au numéro habituel pour faire le point en direct.\n\nNous avons identifié des cas similaires dans le passé qui se résolvent rapidement — pas d'inquiétude, on s'en occupe.\n\nÀ tout de suite,\nThomas` },
+  { id: 2, from: 'Sophie Laurent', initials: 'SL', avatarColor: 'rgba(79,142,247,0.18)', avatarText: '#7db8fa', time: '09:43', subject: 'Demande d\'information sur vos services', category: 'commercial', categoryLabel: 'Commercial',
+    draft: `Bonjour Sophie,\n\nMerci beaucoup pour votre intérêt — ravi de recevoir votre message.\n\nPour mieux comprendre vos besoins et vous proposer une solution adaptée, je vous propose un échange de 20 minutes en visio cette semaine. Voici mon agenda en libre accès : [lien Calendly]\n\nD'ici là, je vous ai joint notre brochure de présentation et un cas client récent qui devrait vous parler.\n\nAu plaisir d'échanger,\nThomas` },
+  { id: 3, from: 'Thomas Dupont', initials: 'TD', avatarColor: 'rgba(16,185,129,0.18)', avatarText: '#6ee7b7', time: '09:44', subject: 'Question sur vos horaires d\'ouverture', category: 'info', categoryLabel: 'Info',
+    draft: `Bonjour Thomas,\n\nMerci pour votre message.\n\nNos horaires sont les suivants :\n— Lundi au vendredi : 9h00 - 18h30\n— Samedi : 9h00 - 12h30\n— Fermé le dimanche et jours fériés\n\nN'hésitez pas si vous avez d'autres questions, je reste disponible.\n\nBien cordialement,\nThomas` },
+  { id: 4, from: 'Promo Newsletter', initials: 'PN', avatarColor: 'rgba(148,163,184,0.12)', avatarText: '#94a3b8', time: '09:45', subject: 'Offre flash : -50% ce week-end seulement !', category: 'inutile', categoryLabel: 'Inutile', draft: null }
+];
+
+const $ = (id) => document.getElementById(id);
+const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+let isRunning = false;
+let demoStartTime = 0;
+
+function fmtTime() {
+  const elapsed = Date.now() - demoStartTime;
+  const s = Math.floor(elapsed / 1000);
+  const ms = Math.floor((elapsed % 1000) / 10);
+  return `+${String(s).padStart(2, '0')}.${String(ms).padStart(2, '0')}`;
+}
+
+function addLog(icon, text) {
+  const log = $('aiLog');
+  if (log.querySelector('div[style*="italic"]')) log.innerHTML = '';
+  const entry = document.createElement('div');
+  entry.className = 'log-entry';
+  entry.innerHTML = `<span class="log-time">${fmtTime()}</span><span class="log-icon">${icon}</span><span class="log-text">${text}</span>`;
+  log.appendChild(entry);
+  requestAnimationFrame(() => entry.classList.add('show'));
+  log.scrollTop = log.scrollHeight;
+}
+
+function setAiStatus(active, text) { $('aiStatus').textContent = text; $('aiDot').classList.toggle('active', active); }
+function setInboxStatus(active, text) { $('inboxStatus').textContent = text; $('inboxDot').classList.toggle('active', active); }
+
+function createEmailRow(email) {
+  const list = $('emailList');
+  if (list.querySelector('.empty-state')) list.innerHTML = '';
+  const div = document.createElement('div');
+  div.className = `email cat-${email.category}`;
+  div.id = `email-${email.id}`;
+  div.innerHTML = `
+    <div class="email-avatar" style="background: ${email.avatarColor}; color: ${email.avatarText};">${email.initials}</div>
+    <div class="email-info">
+      <div class="email-row"><span class="email-from">${email.from}</span><span class="email-time">${email.time}</span></div>
+      <div class="email-subject">${email.subject}</div>
+      <div class="email-meta">
+        <span class="tag tag-${email.category}" id="tag-${email.id}">${email.categoryLabel}</span>
+        ${email.draft ? `<span class="draft-indicator" id="draft-ind-${email.id}">Brouillon prêt</span>` : `<span class="archived-tag" id="arch-${email.id}">Archivé automatiquement</span>`}
+      </div>
+    </div>`;
+  list.appendChild(div);
+  requestAnimationFrame(() => div.classList.add('show'));
+  $('tabCount').textContent = list.querySelectorAll('.email').length;
+}
+
+async function typeWriter(text, container) {
+  container.innerHTML = '';
+  const cursor = document.createElement('span');
+  cursor.className = 'typing-cursor';
+  container.appendChild(cursor);
+  for (let i = 0; i < text.length; i++) {
+    cursor.insertAdjacentText('beforebegin', text[i]);
+    const ch = text[i];
+    let delay = 8;
+    if (ch === '\n') delay = 60;
+    else if (ch === '.' || ch === ',' || ch === '!' || ch === '?') delay = 50;
+    else if (ch === ' ') delay = 12;
+    await sleep(delay);
+  }
+  cursor.remove();
+}
+
+async function processEmail(email) {
+  const row = $(`email-${email.id}`);
+  row.classList.add('processing');
+  setAiStatus(true, 'Analyse en cours');
+  addLog('📥', `Nouveau mail détecté de <strong>${email.from}</strong>`);
+  await sleep(700);
+  addLog('🧠', `Analyse du contenu en cours...`);
+  await sleep(1400);
+  addLog('🏷', `Catégorie identifiée : <span class="highlight-${email.category}">${email.categoryLabel.toUpperCase()}</span>`);
+  $(`tag-${email.id}`).classList.add('show');
+  row.classList.remove('processing');
+  row.classList.add('processed');
+  await sleep(500);
+  if (email.draft) {
+    addLog('✍', `Génération de la réponse adaptée...`);
+    setAiStatus(true, 'Rédaction du brouillon');
+    await typeWriter(email.draft, $('draftContent'));
+    addLog('✅', `Brouillon enregistré dans la conversation`);
+    $(`draft-ind-${email.id}`).classList.add('show');
+  } else {
+    addLog('📁', `Pas de réponse nécessaire — mail archivé`);
+    $(`arch-${email.id}`).classList.add('show');
+  }
+  setAiStatus(false, 'En veille');
+  await sleep(800);
+}
+
+async function runDemo() {
+  if (isRunning) return;
+  isRunning = true;
+  $('startBtn').disabled = true;
+  $('resetBtn').disabled = true;
+  $('completionStats').classList.remove('show');
+  resetVisuals();
+  demoStartTime = Date.now();
+  setInboxStatus(true, 'Surveillance active');
+  setAiStatus(false, 'En veille');
+  $('aiLog').innerHTML = '';
+  addLog('🚀', `MailPilot connecté à votre boîte Gmail`);
+  await sleep(800);
+  let draftCount = 0;
+  for (const email of emails) {
+    addLog('📨', `Email entrant détecté...`);
+    await sleep(400);
+    createEmailRow(email);
+    await sleep(700);
+    await processEmail(email);
+    if (email.draft) draftCount++;
+    await sleep(400);
+  }
+  setInboxStatus(false, 'Tous les emails traités');
+  setAiStatus(false, 'Inactif');
+  const totalSec = ((Date.now() - demoStartTime) / 1000).toFixed(0);
+  $('finalEmailCount').textContent = emails.length;
+  $('finalDraftCount').textContent = draftCount;
+  $('finalTime').textContent = `${totalSec}s`;
+  $('completionStats').classList.add('show');
+  $('resetBtn').disabled = false;
+  $('startBtn').disabled = false;
+  isRunning = false;
+}
+
+function resetVisuals() {
+  $('emailList').innerHTML = '<div class="empty-state">Aucun email pour l\'instant. Cliquez sur "Lancer la démo" pour voir MailPilot en action.</div>';
+  $('aiLog').innerHTML = '<div style="text-align: center; color: var(--gray-dark); font-size: 0.85rem; padding: 2rem 1rem; font-style: italic;">En attente du premier email...</div>';
+  $('draftContent').innerHTML = '<span class="draft-empty">Le brouillon généré par l\'IA s\'affichera ici en temps réel.</span>';
+  $('tabCount').textContent = '0';
+  $('completionStats').classList.remove('show');
+  setInboxStatus(false, 'En attente');
+  setAiStatus(false, 'Inactif');
+}
+
+function resetDemo() {
+  if (isRunning) return;
+  resetVisuals();
+  $('startBtn').disabled = false;
+  $('resetBtn').disabled = true;
+}
+
+function goLaunchDemo(e) {
+  if (e) e.preventDefault();
+  document.getElementById('demo-section').scrollIntoView({behavior: 'smooth', block: 'start'});
+  setTimeout(() => { if (!isRunning) runDemo(); }, 700);
+}
+
+$('startBtn').addEventListener('click', runDemo);
+$('resetBtn').addEventListener('click', resetDemo);
+
+// ===== MODAL MENTIONS LÉGALES =====
+function openLegal(e) {
+  if (e) e.preventDefault();
+  const modal = document.getElementById('legalModal');
+  modal.classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+function closeLegal(e) {
+  if (e && e.target.id !== 'legalModal' && e.type === 'click' && e.target.tagName !== 'BUTTON') return;
+  const modal = document.getElementById('legalModal');
+  modal.classList.remove('show');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeLegal();
+});
+</script>
 
 </body>
 </html>
