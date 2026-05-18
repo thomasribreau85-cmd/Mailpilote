@@ -189,7 +189,6 @@
     .stats { grid-template-columns: 1fr; }
     footer { flex-direction: column; gap: 1rem; text-align: center; }
   }
-  /* === MODAL MENTIONS LÉGALES === */
   .modal-overlay { position: fixed; inset: 0; background: rgba(5, 8, 18, 0.85); backdrop-filter: blur(8px); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 2rem; opacity: 0; transition: opacity 0.25s ease; }
   .modal-overlay.show { display: flex; opacity: 1; }
   .modal-content { background: var(--navy-light); border: 1px solid var(--border); border-radius: 16px; max-width: 760px; width: 100%; max-height: 88vh; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 30px 90px rgba(0,0,0,0.5); transform: translateY(20px); transition: transform 0.3s ease; }
@@ -232,38 +231,38 @@
     <span><span class="brand-text">Mail</span><span class="brand-accent">Pilot</span></span>
   </a>
   <ul>
-    <li><a href="#how">Comment ça marche</a></li>
-    <li><a href="#features">Fonctionnalités</a></li>
+    <li><a href="#how">Comment ca marche</a></li>
+    <li><a href="#features">Fonctionnalites</a></li>
     <li><a href="#targets">Pour qui</a></li>
-    <li><a href="#demo-section" class="nav-cta" onclick="goLaunchDemo(event)">Lancer la démo</a></li>
+    <li><a href="https://mailpilot-production-981d.up.railway.app/login" class="nav-cta">Acceder a l'app</a></li>
   </ul>
 </nav>
 
 <div id="top"></div>
 
 <div class="hero">
-  <div class="badge"><div class="badge-dot"></div>Propulsé par Claude AI</div>
-  <h1>Votre boîte mail gérée <span class="highlight">automatiquement</span> par l'IA</h1>
-  <p class="hero-sub">MailPilot lit, trie et rédige des réponses adaptées à chaque email — en temps réel. Vous n'avez plus qu'à valider et envoyer.</p>
+  <div class="badge"><div class="badge-dot"></div>Propulse par Claude AI</div>
+  <h1>Votre boite mail geree <span class="highlight">automatiquement</span> par l'IA</h1>
+  <p class="hero-sub">MailPilot lit, trie et redige des reponses adaptees a chaque email - en temps reel. Vous n'avez plus qu'a valider et envoyer.</p>
   <div class="hero-cta">
-    <a href="#demo-section" class="btn-primary" onclick="goLaunchDemo(event)"><span class="pulse-dot"></span>Lancer la démo</a>
-    <a href="#how" class="btn-secondary">Voir comment ça marche</a>
+    <a href="https://mailpilot-production-981d.up.railway.app/login" class="btn-primary">Acceder a l'app</a>
+    <a href="#demo-section" class="btn-secondary" onclick="goLaunchDemo(event)">Voir la demo</a>
   </div>
 
   <div class="preview-box">
     <div class="preview-bar">
       <div class="dot dot-red"></div><div class="dot dot-yellow"></div><div class="dot dot-green"></div>
-      <span style="font-size:0.75rem; color: var(--gray); margin-left: 8px;">Gmail — Boîte de réception</span>
+      <span style="font-size:0.75rem; color: var(--gray); margin-left: 8px;">Gmail - Boite de reception</span>
     </div>
     <div class="preview-content">
       <div class="preview-email">
         <div class="email-avatar" style="background: rgba(239,68,68,0.15); color: #f87171;">MR</div>
         <div class="email-info">
           <div class="email-from">Marc Rousseau</div>
-          <div class="email-subject">Situation critique — système en panne, besoin urgent</div>
+          <div class="email-subject">Situation critique - systeme en panne, besoin urgent</div>
         </div>
         <span class="tag tag-urgent">Urgent</span>
-        <div class="ai-badge">✓ Brouillon prêt</div>
+        <div class="ai-badge">Brouillon pret</div>
       </div>
       <div class="preview-email">
         <div class="email-avatar" style="background: rgba(79,142,247,0.15); color: #7db8fa;">SL</div>
@@ -272,7 +271,7 @@
           <div class="email-subject">Proposition de partenariat commercial</div>
         </div>
         <span class="tag tag-commercial">Commercial</span>
-        <div class="ai-badge">✓ Brouillon prêt</div>
+        <div class="ai-badge">Brouillon pret</div>
       </div>
       <div class="preview-email">
         <div class="email-avatar" style="background: rgba(16,185,129,0.15); color: #6ee7b7;">TD</div>
@@ -281,60 +280,60 @@
           <div class="email-subject">Question sur vos horaires d'ouverture</div>
         </div>
         <span class="tag tag-info">Info</span>
-        <div class="ai-badge">✓ Brouillon prêt</div>
+        <div class="ai-badge">Brouillon pret</div>
       </div>
       <div class="preview-email">
         <div class="email-avatar" style="background: rgba(148,163,184,0.1); color: #94a3b8;">NL</div>
         <div class="email-info">
           <div class="email-from">Newsletter</div>
-          <div class="email-subject">Offre spéciale — profitez de -50% ce week-end</div>
+          <div class="email-subject">Offre speciale - profitez de -50% ce week-end</div>
         </div>
         <span class="tag tag-inutile">Inutile</span>
-        <div style="font-size: 0.75rem; color: var(--gray);">Archivé</div>
+        <div style="font-size: 0.75rem; color: var(--gray);">Archive</div>
       </div>
     </div>
   </div>
 </div>
 
 <div class="stats">
-  <div class="stat"><div class="stat-number">90%</div><div class="stat-label">des emails traités automatiquement</div></div>
-  <div class="stat"><div class="stat-number">2 min</div><div class="stat-label">temps de réponse moyen</div></div>
-  <div class="stat"><div class="stat-number">24/7</div><div class="stat-label">disponibilité sans interruption</div></div>
+  <div class="stat"><div class="stat-number">90%</div><div class="stat-label">des emails traites automatiquement</div></div>
+  <div class="stat"><div class="stat-number">2 min</div><div class="stat-label">temps de reponse moyen</div></div>
+  <div class="stat"><div class="stat-number">24/7</div><div class="stat-label">disponibilite sans interruption</div></div>
 </div>
 
 <section id="how">
-  <div class="section-tag">Comment ça marche</div>
-  <h2>Simple à utiliser,<br>puissant dans les résultats</h2>
-  <p class="section-sub">En 3 étapes automatiques, chaque email reçoit une réponse adaptée à son contexte.</p>
+  <div class="section-tag">Comment ca marche</div>
+  <h2>Simple a utiliser,<br>puissant dans les resultats</h2>
+  <p class="section-sub">En 3 etapes automatiques, chaque email recoit une reponse adaptee a son contexte.</p>
   <div class="steps">
-    <div class="step"><div class="step-number">Étape 01</div><div class="step-icon">📥</div><h3>Réception et lecture</h3><p>MailPilot surveille votre boîte Gmail en permanence et lit chaque nouveau message dès son arrivée.</p></div>
-    <div class="step"><div class="step-number">Étape 02</div><div class="step-icon">🧠</div><h3>Analyse et classification</h3><p>L'IA analyse le contenu et classe automatiquement le mail : Urgent, Commercial, Info ou Inutile.</p></div>
-    <div class="step"><div class="step-number">Étape 03</div><div class="step-icon">✍️</div><h3>Réponse adaptée</h3><p>Un brouillon personnalisé est rédigé selon la catégorie et déposé dans votre boîte pour validation.</p></div>
+    <div class="step"><div class="step-number">Etape 01</div><div class="step-icon">&#128229;</div><h3>Reception et lecture</h3><p>MailPilot surveille votre boite Gmail en permanence et lit chaque nouveau message des son arrivee.</p></div>
+    <div class="step"><div class="step-number">Etape 02</div><div class="step-icon">&#129504;</div><h3>Analyse et classification</h3><p>L'IA analyse le contenu et classe automatiquement le mail : Urgent, Commercial, Info ou Inutile.</p></div>
+    <div class="step"><div class="step-number">Etape 03</div><div class="step-icon">&#9999;&#65039;</div><h3>Reponse adaptee</h3><p>Un brouillon personnalise est redige selon la categorie et depose dans votre boite pour validation.</p></div>
   </div>
 </section>
 
 <div id="demo-section">
   <div class="demo-header-block">
-    <div class="section-tag" style="margin-bottom: 1rem;">Démo en direct</div>
+    <div class="section-tag" style="margin-bottom: 1rem;">Demo en direct</div>
     <h2>Voyez MailPilot <span class="highlight" style="background: linear-gradient(135deg, var(--accent), var(--accent-2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">en action</span></h2>
-    <p class="section-sub" style="max-width: 580px; margin: 1rem auto 0;">Cliquez sur le bouton et regardez l'IA recevoir, classer et rédiger une réponse pour chaque email — en temps réel.</p>
+    <p class="section-sub" style="max-width: 580px; margin: 1rem auto 0;">Cliquez sur le bouton et regardez l'IA recevoir, classer et rediger une reponse pour chaque email - en temps reel.</p>
   </div>
 
   <div class="demo-controls">
-    <button id="startBtn" class="btn-primary"><span class="pulse-dot"></span>Lancer la démo</button>
-    <button id="resetBtn" class="btn-secondary" disabled>↻ Recommencer</button>
+    <button id="startBtn" class="btn-primary">Lancer la demo</button>
+    <button id="resetBtn" class="btn-secondary" disabled>&#8635; Recommencer</button>
   </div>
 
   <div class="demo-grid">
     <div class="panel">
       <div class="panel-header">
         <div class="dot dot-red"></div><div class="dot dot-yellow"></div><div class="dot dot-green"></div>
-        <span class="panel-title">Gmail — Boîte de réception</span>
+        <span class="panel-title">Gmail - Boite de reception</span>
         <div class="panel-status"><span id="inboxStatus">En attente</span><div class="status-dot" id="inboxDot"></div></div>
       </div>
       <div class="inbox">
-        <div class="inbox-tabs"><div class="inbox-tab active">📥 Principal <span class="tab-count" id="tabCount">0</span></div></div>
-        <div id="emailList"><div class="empty-state">Aucun email pour l'instant. Cliquez sur "Lancer la démo" pour voir MailPilot en action.</div></div>
+        <div class="inbox-tabs"><div class="inbox-tab active">&#128229; Principal <span class="tab-count" id="tabCount">0</span></div></div>
+        <div id="emailList"><div class="empty-state">Aucun email pour l'instant. Cliquez sur "Lancer la demo" pour voir MailPilot en action.</div></div>
       </div>
     </div>
 
@@ -345,66 +344,67 @@
           <path d="M12 18 L32 36 L52 18" stroke="#4f8ef7" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
           <path d="M51 4 Q52 8 57 10 Q52 12 51 16 Q50 12 45 10 Q50 8 51 4 Z" fill="#7c5cfc"/>
         </svg>
-        <span class="panel-title" style="margin-left: 0;">MailPilot AI — Activité en direct</span>
+        <span class="panel-title" style="margin-left: 0;">MailPilot AI - Activite en direct</span>
         <div class="panel-status"><span id="aiStatus">Inactif</span><div class="status-dot" id="aiDot"></div></div>
       </div>
       <div class="ai-log" id="aiLog">
         <div style="text-align: center; color: var(--gray-dark); font-size: 0.85rem; padding: 2rem 1rem; font-style: italic;">En attente du premier email...</div>
       </div>
       <div class="draft-preview">
-        <div class="draft-preview-header">Brouillon en cours de rédaction</div>
-        <div class="draft-content" id="draftContent"><span class="draft-empty">Le brouillon généré par l'IA s'affichera ici en temps réel.</span></div>
+        <div class="draft-preview-header">Brouillon en cours de redaction</div>
+        <div class="draft-content" id="draftContent"><span class="draft-empty">Le brouillon genere par l'IA s'affichera ici en temps reel.</span></div>
       </div>
     </div>
   </div>
 
   <div class="completion-stats" id="completionStats">
-    <div class="completion-title">✨ Démo terminée</div>
-    <p style="color: var(--gray); max-width: 480px; margin: 0 auto;">Voilà ce que MailPilot fait pour vous, sur chaque email reçu, 24h/24, sans intervention.</p>
+    <div class="completion-title">&#10024; Demo terminee</div>
+    <p style="color: var(--gray); max-width: 480px; margin: 0 auto;">Voila ce que MailPilot fait pour vous, sur chaque email recu, 24h/24, sans intervention.</p>
     <div class="completion-numbers">
-      <div class="stat-item"><div class="num" id="finalEmailCount">0</div><div class="lbl">emails traités</div></div>
-      <div class="stat-item"><div class="num" id="finalDraftCount">0</div><div class="lbl">brouillons prêts à valider</div></div>
+      <div class="stat-item"><div class="num" id="finalEmailCount">0</div><div class="lbl">emails traites</div></div>
+      <div class="stat-item"><div class="num" id="finalDraftCount">0</div><div class="lbl">brouillons prets a valider</div></div>
       <div class="stat-item"><div class="num" id="finalTime">0s</div><div class="lbl">temps total</div></div>
     </div>
     <div class="completion-cta">
-      <button class="btn-primary" onclick="resetDemo()">↻ Relancer la démo</button>
+      <a href="https://mailpilot-production-981d.up.railway.app/login" class="btn-primary">&#128640; Acceder a l'app</a>
+      <button class="btn-secondary" onclick="resetDemo()">&#8635; Relancer la demo</button>
     </div>
   </div>
 </div>
 
 <section id="features">
-  <div class="section-tag">Fonctionnalités</div>
+  <div class="section-tag">Fonctionnalites</div>
   <h2>Tout ce dont vous avez<br>besoin, rien de plus</h2>
-  <p class="section-sub">Conçu pour les petites entreprises qui veulent gagner du temps sans perdre le contrôle.</p>
+  <p class="section-sub">Concu pour les petites entreprises qui veulent gagner du temps sans perdre le controle.</p>
   <div class="features">
-    <div class="feature"><div class="feature-icon" style="background: rgba(239,68,68,0.12);">🔴</div><div><h3>Traitement des urgences</h3><p>Les mails urgents sont détectés en priorité. Une réponse rassurante est rédigée immédiatement.</p></div></div>
-    <div class="feature"><div class="feature-icon" style="background: rgba(79,142,247,0.12);">💼</div><div><h3>Réponses commerciales</h3><p>Chaque demande commerciale reçoit une réponse professionnelle et engageante, adaptée à votre secteur.</p></div></div>
-    <div class="feature"><div class="feature-icon" style="background: rgba(16,185,129,0.12);">📋</div><div><h3>Gestion des demandes info</h3><p>Les questions reçoivent une confirmation immédiate et un engagement de réponse dans les meilleurs délais.</p></div></div>
-    <div class="feature"><div class="feature-icon" style="background: rgba(124,92,252,0.12);">🏷️</div><div><h3>Étiquetage automatique</h3><p>Chaque email est étiqueté et classé dans Gmail. Votre boîte reste toujours organisée sans effort.</p></div></div>
-    <div class="feature"><div class="feature-icon" style="background: rgba(251,191,36,0.12);">⚡</div><div><h3>Temps réel</h3><p>Le système tourne 24h/24, 7j/7. Vos clients reçoivent une réponse en quelques minutes, même la nuit.</p></div></div>
-    <div class="feature"><div class="feature-icon" style="background: rgba(148,163,184,0.12);">🔒</div><div><h3>Vous gardez le contrôle</h3><p>MailPilot crée des brouillons, pas des envois automatiques. Vous validez chaque réponse avant envoi.</p></div></div>
+    <div class="feature"><div class="feature-icon" style="background: rgba(239,68,68,0.12);">&#128308;</div><div><h3>Traitement des urgences</h3><p>Les mails urgents sont detectes en priorite. Une reponse rassurante est redigee immediatement.</p></div></div>
+    <div class="feature"><div class="feature-icon" style="background: rgba(79,142,247,0.12);">&#128188;</div><div><h3>Reponses commerciales</h3><p>Chaque demande commerciale recoit une reponse professionnelle et engageante, adaptee a votre secteur.</p></div></div>
+    <div class="feature"><div class="feature-icon" style="background: rgba(16,185,129,0.12);">&#128203;</div><div><h3>Gestion des demandes info</h3><p>Les questions recoivent une confirmation immediate et un engagement de reponse dans les meilleurs delais.</p></div></div>
+    <div class="feature"><div class="feature-icon" style="background: rgba(124,92,252,0.12);">&#127991;&#65039;</div><div><h3>Etiquetage automatique</h3><p>Chaque email est etiquete et classe dans Gmail. Votre boite reste toujours organisee sans effort.</p></div></div>
+    <div class="feature"><div class="feature-icon" style="background: rgba(251,191,36,0.12);">&#9889;</div><div><h3>Temps reel</h3><p>Le systeme tourne 24h/24, 7j/7. Vos clients recoivent une reponse en quelques minutes, meme la nuit.</p></div></div>
+    <div class="feature"><div class="feature-icon" style="background: rgba(148,163,184,0.12);">&#128274;</div><div><h3>Vous gardez le controle</h3><p>MailPilot cree des brouillons, pas des envois automatiques. Vous validez chaque reponse avant envoi.</p></div></div>
   </div>
 </section>
 
 <section id="targets">
   <div class="section-tag">Pour qui</div>
   <h2>Fait pour les petites<br>entreprises ambitieuses</h2>
-  <p class="section-sub">MailPilot s'adapte à tous les secteurs qui reçoivent un volume important d'emails.</p>
+  <p class="section-sub">MailPilot s'adapte a tous les secteurs qui recoivent un volume important d'emails.</p>
   <div class="targets">
-    <div class="target"><div class="target-icon">🏠</div><h3>Agences immobilières</h3><p>Demandes de visites, infos sur les biens</p></div>
-    <div class="target"><div class="target-icon">📊</div><h3>Cabinets comptables</h3><p>Questions clients, documents, urgences</p></div>
-    <div class="target"><div class="target-icon">🔧</div><h3>Artisans & PME</h3><p>Devis, disponibilités, suivi chantier</p></div>
-    <div class="target"><div class="target-icon">⚖️</div><h3>Professions libérales</h3><p>Prises de RDV, demandes d'info</p></div>
+    <div class="target"><div class="target-icon">&#127968;</div><h3>Agences immobilieres</h3><p>Demandes de visites, infos sur les biens</p></div>
+    <div class="target"><div class="target-icon">&#128202;</div><h3>Cabinets comptables</h3><p>Questions clients, documents, urgences</p></div>
+    <div class="target"><div class="target-icon">&#128295;</div><h3>Artisans et PME</h3><p>Devis, disponibilites, suivi chantier</p></div>
+    <div class="target"><div class="target-icon">&#9878;&#65039;</div><h3>Professions liberales</h3><p>Prises de RDV, demandes d'info</p></div>
   </div>
 </section>
 
 <div class="cta-section" id="contact">
   <div class="section-tag">Commencer</div>
-  <h2>Prêt à reprendre le contrôle<br>de votre boîte mail ?</h2>
-  <p>Lancez la démo pour voir MailPilot en action, ou contactez-nous pour une installation sur votre vraie boîte mail en moins d'une heure.</p>
+  <h2>Pret a reprendre le controle<br>de votre boite mail ?</h2>
+  <p>Lancez la demo pour voir MailPilot en action, ou contactez-nous pour une installation sur votre vraie boite mail en moins d'une heure.</p>
   <div class="hero-cta">
-    <a href="#demo-section" class="btn-primary" onclick="goLaunchDemo(event)"><span class="pulse-dot"></span>Lancer la démo</a>
-    <a href="mailto:mailpilot.contact86@gmail.com?subject=Demande%20d%27installation%20MailPilot&body=Bonjour%2C%0A%0AJ%27ai%20test%C3%A9%20la%20d%C3%A9mo%20et%20je%20souhaiterais%20une%20installation%20sur%20ma%20bo%C3%AEte%20mail.%0A%0ANom%20%3A%0AEntreprise%20%3A%0ASecteur%20d%27activit%C3%A9%20%3A%0AVolume%20d%27emails%20re%C3%A7us%20par%20jour%20%3A%0AT%C3%A9l%C3%A9phone%20%3A%0A%0AMerci%20%21" class="btn-secondary">Nous contacter</a>
+    <a href="https://mailpilot-production-981d.up.railway.app/login" class="btn-primary">&#128640; Acceder a l'app</a>
+    <a href="mailto:mailpilot.contact86@gmail.com?subject=Demande%20d%27installation%20MailPilot&body=Bonjour%2C%0A%0AJ%27ai%20teste%20la%20demo%20et%20je%20souhaiterais%20une%20installation%20sur%20ma%20boite%20mail.%0A%0ANom%20%3A%0AEntreprise%20%3A%0ASecteur%20d%27activite%20%3A%0AVolume%20d%27emails%20recus%20par%20jour%20%3A%0ATelephone%20%3A%0A%0AMerci%20%21" class="btn-secondary">Nous contacter</a>
   </div>
 </div>
 
@@ -417,68 +417,46 @@
     </svg>
     <span><span class="brand-text">Mail</span><span class="brand-accent">Pilot</span></span>
   </div>
-  <p style="color: var(--gray);">© 2026 MailPilot — Assistant email propulsé par l'IA</p>
+  <p style="color: var(--gray);">2026 MailPilot - Assistant email propulse par l'IA</p>
   <div class="footer-links">
-    <a href="#" onclick="openLegal(event)">Mentions légales</a>
+    <a href="#" onclick="openLegal(event)">Mentions legales</a>
     <a href="mailto:mailpilot.contact86@gmail.com">Contact</a>
   </div>
 </footer>
 
-<!-- ===== MODAL MENTIONS LÉGALES ===== -->
 <div class="modal-overlay" id="legalModal" onclick="closeLegal(event)">
   <div class="modal-content" onclick="event.stopPropagation()">
     <div class="modal-head">
-      <h2>Mentions légales</h2>
-      <button class="modal-close" onclick="closeLegal()" aria-label="Fermer">×</button>
+      <h2>Mentions legales</h2>
+      <button class="modal-close" onclick="closeLegal()" aria-label="Fermer">x</button>
     </div>
     <div class="modal-body">
-      <p class="modal-update">Dernière mise à jour : 5 mai 2026</p>
-
+      <p class="modal-update">Derniere mise a jour : 5 mai 2026</p>
       <div class="modal-notice">
-        <strong>Statut du projet :</strong> MailPilot est actuellement en phase de test et de développement. Le service n'est pas encore commercialisé. Les démos proposées sont gratuites et sans engagement.
+        <strong>Statut du projet :</strong> MailPilot est actuellement en phase de test et de developpement. Le service n'est pas encore commercialise. Les demos proposees sont gratuites et sans engagement.
       </div>
-
-      <h3>1. Éditeur du site</h3>
-      <p>Le présent site <strong>mailpilote.vercel.app</strong> est édité à titre personnel, dans le cadre d'un projet en phase de test, par :</p>
+      <h3>1. Editeur du site</h3>
+      <p>Le present site <strong>mailpilote.vercel.app</strong> est edite a titre personnel par :</p>
       <div class="modal-info-block">
         <p><strong>Thomas RIBREAU</strong></p>
         <p>6 rue du Sanital</p>
-        <p>86100 Châtellerault, France</p>
-        <p>Téléphone : <a href="tel:+33659512712">06 59 51 27 12</a></p>
+        <p>86100 Chatellerault, France</p>
+        <p>Telephone : <a href="tel:+33659512712">06 59 51 27 12</a></p>
         <p>Email : <a href="mailto:mailpilot.contact86@gmail.com">mailpilot.contact86@gmail.com</a></p>
       </div>
-
       <h3>2. Directeur de la publication</h3>
       <p>Le directeur de la publication du Site est <strong>Thomas RIBREAU</strong>.</p>
-
-      <h3>3. Hébergement</h3>
-      <p>Le Site est hébergé par :</p>
+      <h3>3. Hebergement</h3>
       <div class="modal-info-block">
         <p><strong>Vercel Inc.</strong></p>
-        <p>440 N Barranca Ave #4133</p>
-        <p>Covina, CA 91723, États-Unis</p>
+        <p>440 N Barranca Ave #4133, Covina, CA 91723, Etats-Unis</p>
         <p>Site : <a href="https://vercel.com" target="_blank" rel="noopener">vercel.com</a></p>
       </div>
-
-      <h3>4. Propriété intellectuelle</h3>
-      <p>L'ensemble des éléments présents sur le Site (textes, graphismes, logo, code) est la propriété exclusive de Thomas RIBREAU. Toute reproduction non autorisée est interdite et sanctionnée par les articles L.335-2 et suivants du Code de la propriété intellectuelle. La marque « MailPilot » et son logo sont la propriété de Thomas RIBREAU.</p>
-
-      <h3>5. Données personnelles (RGPD)</h3>
-      <p>Le Site ne collecte aucune donnée personnelle de manière automatique. Aucun cookie de tracking n'est utilisé.</p>
-      <p>Lorsque vous nous contactez par email, les données communiquées (nom, prénom, email, téléphone, entreprise) sont utilisées <strong>uniquement</strong> pour répondre à votre demande. Elles ne sont jamais transmises à des tiers.</p>
-      <p>Conformément au RGPD et à la loi « Informatique et Libertés », vous disposez d'un droit d'accès, rectification, opposition, suppression, limitation et portabilité. Pour exercer ces droits : <a href="mailto:mailpilot.contact86@gmail.com">mailpilot.contact86@gmail.com</a>.</p>
-      <p>Les données collectées sont conservées 3 ans maximum à compter du dernier contact.</p>
-
-      <h3>6. Cookies</h3>
-      <p>Le Site n'utilise aucun cookie publicitaire ni de mesure d'audience nécessitant un consentement préalable. Seuls des cookies techniques strictement nécessaires peuvent être déposés par l'hébergeur Vercel.</p>
-
-      <h3>7. Limitation de responsabilité</h3>
-      <p>Les informations présentées sur le Site le sont à titre indicatif. Thomas RIBREAU s'efforce d'assurer leur exactitude sans pour autant garantir l'absence d'erreurs. Le service MailPilot étant en phase de développement, aucun engagement contractuel de niveau de service (SLA) n'est garanti à ce stade.</p>
-
-      <h3>8. Droit applicable</h3>
-      <p>Les présentes mentions légales sont soumises au droit français. En cas de litige, les tribunaux français seront seuls compétents.</p>
-
-      <h3>9. Contact</h3>
+      <h3>4. Propriete intellectuelle</h3>
+      <p>L'ensemble des elements presents sur le Site est la propriete exclusive de Thomas RIBREAU. Toute reproduction non autorisee est interdite.</p>
+      <h3>5. Donnees personnelles (RGPD)</h3>
+      <p>Le Site ne collecte aucune donnee personnelle de maniere automatique. Les donnees communiquees par email sont utilisees uniquement pour repondre a votre demande.</p>
+      <h3>6. Contact</h3>
       <p>Pour toute question : <a href="mailto:mailpilot.contact86@gmail.com">mailpilot.contact86@gmail.com</a>.</p>
     </div>
   </div>
@@ -486,12 +464,12 @@
 
 <script>
 const emails = [
-  { id: 1, from: 'Marc Rousseau', initials: 'MR', avatarColor: 'rgba(239,68,68,0.18)', avatarText: '#f87171', time: '09:42', subject: 'URGENT — Système hors service depuis ce matin', category: 'urgent', categoryLabel: 'Urgent',
-    draft: `Bonjour Marc,\n\nJe viens de prendre connaissance de votre message et je comprends l'urgence de la situation.\n\nNotre équipe technique est immédiatement mobilisée pour diagnostiquer le problème. Je vous appelle dans les 15 prochaines minutes au numéro habituel pour faire le point en direct.\n\nNous avons identifié des cas similaires dans le passé qui se résolvent rapidement — pas d'inquiétude, on s'en occupe.\n\nÀ tout de suite,\nThomas` },
-  { id: 2, from: 'Sophie Laurent', initials: 'SL', avatarColor: 'rgba(79,142,247,0.18)', avatarText: '#7db8fa', time: '09:43', subject: 'Demande d\'information sur vos services', category: 'commercial', categoryLabel: 'Commercial',
-    draft: `Bonjour Sophie,\n\nMerci beaucoup pour votre intérêt — ravi de recevoir votre message.\n\nPour mieux comprendre vos besoins et vous proposer une solution adaptée, je vous propose un échange de 20 minutes en visio cette semaine. Voici mon agenda en libre accès : [lien Calendly]\n\nD'ici là, je vous ai joint notre brochure de présentation et un cas client récent qui devrait vous parler.\n\nAu plaisir d'échanger,\nThomas` },
-  { id: 3, from: 'Thomas Dupont', initials: 'TD', avatarColor: 'rgba(16,185,129,0.18)', avatarText: '#6ee7b7', time: '09:44', subject: 'Question sur vos horaires d\'ouverture', category: 'info', categoryLabel: 'Info',
-    draft: `Bonjour Thomas,\n\nMerci pour votre message.\n\nNos horaires sont les suivants :\n— Lundi au vendredi : 9h00 - 18h30\n— Samedi : 9h00 - 12h30\n— Fermé le dimanche et jours fériés\n\nN'hésitez pas si vous avez d'autres questions, je reste disponible.\n\nBien cordialement,\nThomas` },
+  { id: 1, from: 'Marc Rousseau', initials: 'MR', avatarColor: 'rgba(239,68,68,0.18)', avatarText: '#f87171', time: '09:42', subject: 'URGENT - Systeme hors service depuis ce matin', category: 'urgent', categoryLabel: 'Urgent',
+    draft: "Bonjour Marc,\n\nJe viens de prendre connaissance de votre message et je comprends l'urgence de la situation.\n\nNotre equipe technique est immediatement mobilisee pour diagnostiquer le probleme. Je vous appelle dans les 15 prochaines minutes.\n\nA tout de suite,\nThomas" },
+  { id: 2, from: 'Sophie Laurent', initials: 'SL', avatarColor: 'rgba(79,142,247,0.18)', avatarText: '#7db8fa', time: '09:43', subject: "Demande d'information sur vos services", category: 'commercial', categoryLabel: 'Commercial',
+    draft: "Bonjour Sophie,\n\nMerci beaucoup pour votre interet.\n\nPour mieux comprendre vos besoins, je vous propose un echange de 20 minutes en visio cette semaine.\n\nAu plaisir d'echanger,\nThomas" },
+  { id: 3, from: 'Thomas Dupont', initials: 'TD', avatarColor: 'rgba(16,185,129,0.18)', avatarText: '#6ee7b7', time: '09:44', subject: "Question sur vos horaires d'ouverture", category: 'info', categoryLabel: 'Info',
+    draft: "Bonjour Thomas,\n\nMerci pour votre message.\n\nNos horaires sont les suivants :\n- Lundi au vendredi : 9h00 - 18h30\n- Samedi : 9h00 - 12h30\n\nBien cordialement,\nThomas" },
   { id: 4, from: 'Promo Newsletter', initials: 'PN', avatarColor: 'rgba(148,163,184,0.12)', avatarText: '#94a3b8', time: '09:45', subject: 'Offre flash : -50% ce week-end seulement !', category: 'inutile', categoryLabel: 'Inutile', draft: null }
 ];
 
@@ -504,7 +482,7 @@ function fmtTime() {
   const elapsed = Date.now() - demoStartTime;
   const s = Math.floor(elapsed / 1000);
   const ms = Math.floor((elapsed % 1000) / 10);
-  return `+${String(s).padStart(2, '0')}.${String(ms).padStart(2, '0')}`;
+  return '+' + String(s).padStart(2, '0') + '.' + String(ms).padStart(2, '0');
 }
 
 function addLog(icon, text) {
@@ -512,7 +490,7 @@ function addLog(icon, text) {
   if (log.querySelector('div[style*="italic"]')) log.innerHTML = '';
   const entry = document.createElement('div');
   entry.className = 'log-entry';
-  entry.innerHTML = `<span class="log-time">${fmtTime()}</span><span class="log-icon">${icon}</span><span class="log-text">${text}</span>`;
+  entry.innerHTML = '<span class="log-time">' + fmtTime() + '</span><span class="log-icon">' + icon + '</span><span class="log-text">' + text + '</span>';
   log.appendChild(entry);
   requestAnimationFrame(() => entry.classList.add('show'));
   log.scrollTop = log.scrollHeight;
@@ -525,18 +503,9 @@ function createEmailRow(email) {
   const list = $('emailList');
   if (list.querySelector('.empty-state')) list.innerHTML = '';
   const div = document.createElement('div');
-  div.className = `email cat-${email.category}`;
-  div.id = `email-${email.id}`;
-  div.innerHTML = `
-    <div class="email-avatar" style="background: ${email.avatarColor}; color: ${email.avatarText};">${email.initials}</div>
-    <div class="email-info">
-      <div class="email-row"><span class="email-from">${email.from}</span><span class="email-time">${email.time}</span></div>
-      <div class="email-subject">${email.subject}</div>
-      <div class="email-meta">
-        <span class="tag tag-${email.category}" id="tag-${email.id}">${email.categoryLabel}</span>
-        ${email.draft ? `<span class="draft-indicator" id="draft-ind-${email.id}">Brouillon prêt</span>` : `<span class="archived-tag" id="arch-${email.id}">Archivé automatiquement</span>`}
-      </div>
-    </div>`;
+  div.className = 'email cat-' + email.category;
+  div.id = 'email-' + email.id;
+  div.innerHTML = '<div class="email-avatar" style="background: ' + email.avatarColor + '; color: ' + email.avatarText + ';">' + email.initials + '</div><div class="email-info"><div class="email-row"><span class="email-from">' + email.from + '</span><span class="email-time">' + email.time + '</span></div><div class="email-subject">' + email.subject + '</div><div class="email-meta"><span class="tag tag-' + email.category + '" id="tag-' + email.id + '">' + email.categoryLabel + '</span>' + (email.draft ? '<span class="draft-indicator" id="draft-ind-' + email.id + '">Brouillon pret</span>' : '<span class="archived-tag" id="arch-' + email.id + '">Archive automatiquement</span>') + '</div></div>';
   list.appendChild(div);
   requestAnimationFrame(() => div.classList.add('show'));
   $('tabCount').textContent = list.querySelectorAll('.email').length;
@@ -560,27 +529,27 @@ async function typeWriter(text, container) {
 }
 
 async function processEmail(email) {
-  const row = $(`email-${email.id}`);
+  const row = $('email-' + email.id);
   row.classList.add('processing');
   setAiStatus(true, 'Analyse en cours');
-  addLog('📥', `Nouveau mail détecté de <strong>${email.from}</strong>`);
+  addLog('📥', 'Nouveau mail detecte de <strong>' + email.from + '</strong>');
   await sleep(700);
-  addLog('🧠', `Analyse du contenu en cours...`);
+  addLog('🧠', 'Analyse du contenu en cours...');
   await sleep(1400);
-  addLog('🏷', `Catégorie identifiée : <span class="highlight-${email.category}">${email.categoryLabel.toUpperCase()}</span>`);
-  $(`tag-${email.id}`).classList.add('show');
+  addLog('🏷', 'Categorie identifiee : <span class="highlight-' + email.category + '">' + email.categoryLabel.toUpperCase() + '</span>');
+  $('tag-' + email.id).classList.add('show');
   row.classList.remove('processing');
   row.classList.add('processed');
   await sleep(500);
   if (email.draft) {
-    addLog('✍', `Génération de la réponse adaptée...`);
-    setAiStatus(true, 'Rédaction du brouillon');
+    addLog('✍', 'Generation de la reponse adaptee...');
+    setAiStatus(true, 'Redaction du brouillon');
     await typeWriter(email.draft, $('draftContent'));
-    addLog('✅', `Brouillon enregistré dans la conversation`);
-    $(`draft-ind-${email.id}`).classList.add('show');
+    addLog('✅', 'Brouillon enregistre dans la conversation');
+    $('draft-ind-' + email.id).classList.add('show');
   } else {
-    addLog('📁', `Pas de réponse nécessaire — mail archivé`);
-    $(`arch-${email.id}`).classList.add('show');
+    addLog('📁', 'Pas de reponse necessaire - mail archive');
+    $('arch-' + email.id).classList.add('show');
   }
   setAiStatus(false, 'En veille');
   await sleep(800);
@@ -597,11 +566,11 @@ async function runDemo() {
   setInboxStatus(true, 'Surveillance active');
   setAiStatus(false, 'En veille');
   $('aiLog').innerHTML = '';
-  addLog('🚀', `MailPilot connecté à votre boîte Gmail`);
+  addLog('🚀', 'MailPilot connecte a votre boite Gmail');
   await sleep(800);
   let draftCount = 0;
   for (const email of emails) {
-    addLog('📨', `Email entrant détecté...`);
+    addLog('📨', 'Email entrant detecte...');
     await sleep(400);
     createEmailRow(email);
     await sleep(700);
@@ -609,12 +578,12 @@ async function runDemo() {
     if (email.draft) draftCount++;
     await sleep(400);
   }
-  setInboxStatus(false, 'Tous les emails traités');
+  setInboxStatus(false, 'Tous les emails traites');
   setAiStatus(false, 'Inactif');
   const totalSec = ((Date.now() - demoStartTime) / 1000).toFixed(0);
   $('finalEmailCount').textContent = emails.length;
   $('finalDraftCount').textContent = draftCount;
-  $('finalTime').textContent = `${totalSec}s`;
+  $('finalTime').textContent = totalSec + 's';
   $('completionStats').classList.add('show');
   $('resetBtn').disabled = false;
   $('startBtn').disabled = false;
@@ -622,9 +591,9 @@ async function runDemo() {
 }
 
 function resetVisuals() {
-  $('emailList').innerHTML = '<div class="empty-state">Aucun email pour l\'instant. Cliquez sur "Lancer la démo" pour voir MailPilot en action.</div>';
+  $('emailList').innerHTML = '<div class="empty-state">Aucun email pour l\'instant. Cliquez sur "Lancer la demo" pour voir MailPilot en action.</div>';
   $('aiLog').innerHTML = '<div style="text-align: center; color: var(--gray-dark); font-size: 0.85rem; padding: 2rem 1rem; font-style: italic;">En attente du premier email...</div>';
-  $('draftContent').innerHTML = '<span class="draft-empty">Le brouillon généré par l\'IA s\'affichera ici en temps réel.</span>';
+  $('draftContent').innerHTML = '<span class="draft-empty">Le brouillon genere par l\'IA s\'affichera ici en temps reel.</span>';
   $('tabCount').textContent = '0';
   $('completionStats').classList.remove('show');
   setInboxStatus(false, 'En attente');
@@ -647,7 +616,6 @@ function goLaunchDemo(e) {
 $('startBtn').addEventListener('click', runDemo);
 $('resetBtn').addEventListener('click', resetDemo);
 
-// ===== MODAL MENTIONS LÉGALES =====
 function openLegal(e) {
   if (e) e.preventDefault();
   const modal = document.getElementById('legalModal');
