@@ -4,22 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MailPilot — Assistant Email IA</title>
-
 <meta name="description" content="MailPilot lit, trie et rédige des réponses adaptées à chaque email — en temps réel. L'assistant email IA pour les petites entreprises qui veulent gagner du temps sans perdre le contrôle.">
 <meta name="keywords" content="email IA, assistant email, automatisation email, Gmail IA, Claude AI, MailPilot">
 <meta name="author" content="MailPilot">
-
 <meta property="og:type" content="website">
 <meta property="og:title" content="MailPilot — Votre boîte mail gérée automatiquement par l'IA">
 <meta property="og:description" content="MailPilot lit, trie et rédige des réponses adaptées à chaque email — en temps réel. Vous n'avez plus qu'à valider et envoyer.">
 <meta property="og:locale" content="fr_FR">
-
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="MailPilot — Assistant Email IA">
 <meta name="twitter:description" content="Votre boîte mail gérée automatiquement par l'IA. Tri, classification et brouillons de réponse en temps réel.">
-
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230a0f1e'/%3E%3Crect x='12' y='18' width='40' height='28' rx='2' stroke='%234f8ef7' stroke-width='2.75' fill='none'/%3E%3Cpath d='M12 18 L32 36 L52 18' stroke='%234f8ef7' stroke-width='2.75' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M51 4 Q52 8 57 10 Q52 12 51 16 Q50 12 45 10 Q50 8 51 4 Z' fill='%237c5cfc'/%3E%3C/svg%3E">
-
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -41,6 +36,7 @@
   nav a { color: var(--gray); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; cursor: pointer; }
   nav a:hover { color: var(--white); }
   .nav-cta { background: var(--accent); color: var(--white) !important; padding: 0.5rem 1.2rem; border-radius: 6px; }
+  .nav-login { color: var(--gray) !important; font-size: 0.85rem; }
   .hero { text-align: center; padding: 7rem 4rem 5rem; position: relative; overflow: hidden; }
   .hero::before { content: ''; position: absolute; top: -100px; left: 50%; transform: translateX(-50%); width: 600px; height: 600px; background: radial-gradient(circle, rgba(79,142,247,0.12) 0%, transparent 70%); pointer-events: none; }
   .badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(79,142,247,0.1); border: 1px solid rgba(79,142,247,0.25); color: var(--accent); padding: 0.35rem 1rem; border-radius: 20px; font-size: 0.8rem; font-weight: 500; margin-bottom: 1.5rem; }
@@ -49,7 +45,10 @@
   h1 { font-family: 'Syne', sans-serif; font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; line-height: 1.1; letter-spacing: -1.5px; margin-bottom: 1.5rem; max-width: 800px; margin-left: auto; margin-right: auto; }
   h1 .highlight { background: linear-gradient(135deg, var(--accent), var(--accent-2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
   .hero-sub { color: var(--gray); font-size: 1.1rem; max-width: 540px; margin: 0 auto 2.5rem; line-height: 1.7; }
-  .hero-cta { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .hero-cta { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; align-items: center; }
+  .hero-login-link { font-size: 0.85rem; color: var(--gray); text-decoration: none; margin-top: 0.5rem; width: 100%; }
+  .hero-login-link:hover { color: var(--white); }
+  .hero-login-link span { color: var(--accent); }
   .btn-primary { background: var(--accent); color: white; padding: 0.85rem 2rem; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 600; border: none; cursor: pointer; text-decoration: none; transition: opacity 0.2s, transform 0.1s; display: inline-flex; align-items: center; gap: 8px; }
   .btn-primary:hover:not(:disabled) { opacity: 0.9; transform: translateY(-1px); }
   .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
@@ -138,7 +137,7 @@
   .email .tag.show { opacity: 1; transform: scale(1); }
   .draft-indicator { font-size: 0.72rem; color: var(--accent); display: flex; align-items: center; gap: 4px; opacity: 0; transition: opacity 0.4s; }
   .draft-indicator.show { opacity: 1; }
-  .draft-indicator::before { content: '✓'; font-weight: 700; }
+  .draft-indicator::before { content: 'v'; font-weight: 700; }
   .archived-tag { font-size: 0.7rem; color: var(--gray-dark); font-style: italic; opacity: 0; transition: opacity 0.4s; }
   .archived-tag.show { opacity: 1; }
   .ai-log { flex: 1; padding: 1rem 1.2rem; overflow-y: auto; display: flex; flex-direction: column; gap: 0.6rem; max-height: 340px; }
@@ -154,7 +153,6 @@
   .log-text .highlight-inutile { color: #94a3b8; font-weight: 600; }
   .draft-preview { border-top: 1px solid var(--border); padding: 1rem 1.2rem 1.2rem; background: rgba(255,255,255,0.015); flex-shrink: 0; min-height: 200px; display: flex; flex-direction: column; }
   .draft-preview-header { font-size: 0.7rem; font-weight: 600; color: var(--gray-dark); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 6px; }
-  .draft-preview-header::before { content: '✍'; font-size: 0.85rem; }
   .draft-content { background: var(--navy); border: 1px solid var(--border); border-radius: 8px; padding: 0.85rem 1rem; font-size: 0.82rem; line-height: 1.55; color: var(--white); flex: 1; white-space: pre-wrap; font-family: 'DM Sans', sans-serif; min-height: 130px; position: relative; }
   .draft-empty { color: var(--gray-dark); font-style: italic; font-size: 0.8rem; }
   .typing-cursor { display: inline-block; width: 2px; height: 1em; background: var(--accent); vertical-align: text-bottom; animation: blink 0.8s infinite; margin-left: 1px; }
@@ -189,7 +187,7 @@
     .stats { grid-template-columns: 1fr; }
     footer { flex-direction: column; gap: 1rem; text-align: center; }
   }
-  .modal-overlay { position: fixed; inset: 0; background: rgba(5, 8, 18, 0.85); backdrop-filter: blur(8px); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 2rem; opacity: 0; transition: opacity 0.25s ease; }
+  .modal-overlay { position: fixed; inset: 0; background: rgba(5,8,18,0.85); backdrop-filter: blur(8px); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 2rem; opacity: 0; transition: opacity 0.25s ease; }
   .modal-overlay.show { display: flex; opacity: 1; }
   .modal-content { background: var(--navy-light); border: 1px solid var(--border); border-radius: 16px; max-width: 760px; width: 100%; max-height: 88vh; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 30px 90px rgba(0,0,0,0.5); transform: translateY(20px); transition: transform 0.3s ease; }
   .modal-overlay.show .modal-content { transform: translateY(0); }
@@ -212,11 +210,7 @@
   .modal-update { color: var(--gray-dark); font-size: 0.78rem; margin-bottom: 1.2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
   .footer-links a { background: none; border: none; color: var(--gray); text-decoration: none; font-size: 0.8rem; cursor: pointer; padding: 0; font-family: inherit; }
   .footer-links a:hover { color: var(--white); }
-  @media (max-width: 600px) {
-    .modal-overlay { padding: 1rem; }
-    .modal-head { padding: 1rem 1.5rem; }
-    .modal-body { padding: 1.5rem; }
-  }
+  @media (max-width: 600px) { .modal-overlay { padding: 1rem; } .modal-head { padding: 1rem 1.5rem; } .modal-body { padding: 1.5rem; } }
 </style>
 </head>
 <body>
@@ -234,7 +228,8 @@
     <li><a href="#how">Comment ca marche</a></li>
     <li><a href="#features">Fonctionnalites</a></li>
     <li><a href="#targets">Pour qui</a></li>
-    <li><a href="https://mailpilot-production-981d.up.railway.app/login" class="nav-cta">Acceder a l'app</a></li>
+    <li><a href="https://mailpilot-production-981d.up.railway.app/login" class="nav-login">Se connecter</a></li>
+    <li><a href="https://mailpilot-production-981d.up.railway.app/register" class="nav-cta">S'inscrire</a></li>
   </ul>
 </nav>
 
@@ -245,52 +240,41 @@
   <h1>Votre boite mail geree <span class="highlight">automatiquement</span> par l'IA</h1>
   <p class="hero-sub">MailPilot lit, trie et redige des reponses adaptees a chaque email - en temps reel. Vous n'avez plus qu'a valider et envoyer.</p>
   <div class="hero-cta">
-    <a href="https://mailpilot-production-981d.up.railway.app/login" class="btn-primary">Acceder a l'app</a>
+    <a href="https://mailpilot-production-981d.up.railway.app/register" class="btn-primary">&#128640; S'inscrire gratuitement</a>
     <a href="#demo-section" class="btn-secondary" onclick="goLaunchDemo(event)">Voir la demo</a>
   </div>
+  <a href="https://mailpilot-production-981d.up.railway.app/login" class="hero-login-link">Deja client ? <span>Se connecter</span></a>
+</div>
 
-  <div class="preview-box">
-    <div class="preview-bar">
-      <div class="dot dot-red"></div><div class="dot dot-yellow"></div><div class="dot dot-green"></div>
-      <span style="font-size:0.75rem; color: var(--gray); margin-left: 8px;">Gmail - Boite de reception</span>
+<div class="preview-box" style="max-width:760px;margin:3rem auto 0;">
+  <div class="preview-bar">
+    <div class="dot dot-red"></div><div class="dot dot-yellow"></div><div class="dot dot-green"></div>
+    <span style="font-size:0.75rem; color: var(--gray); margin-left: 8px;">Gmail - Boite de reception</span>
+  </div>
+  <div class="preview-content">
+    <div class="preview-email">
+      <div class="email-avatar" style="background: rgba(239,68,68,0.15); color: #f87171;">MR</div>
+      <div class="email-info"><div class="email-from">Marc Rousseau</div><div class="email-subject">Situation critique - systeme en panne, besoin urgent</div></div>
+      <span class="tag tag-urgent">Urgent</span>
+      <div class="ai-badge">Brouillon pret</div>
     </div>
-    <div class="preview-content">
-      <div class="preview-email">
-        <div class="email-avatar" style="background: rgba(239,68,68,0.15); color: #f87171;">MR</div>
-        <div class="email-info">
-          <div class="email-from">Marc Rousseau</div>
-          <div class="email-subject">Situation critique - systeme en panne, besoin urgent</div>
-        </div>
-        <span class="tag tag-urgent">Urgent</span>
-        <div class="ai-badge">Brouillon pret</div>
-      </div>
-      <div class="preview-email">
-        <div class="email-avatar" style="background: rgba(79,142,247,0.15); color: #7db8fa;">SL</div>
-        <div class="email-info">
-          <div class="email-from">Sophie Laurent</div>
-          <div class="email-subject">Proposition de partenariat commercial</div>
-        </div>
-        <span class="tag tag-commercial">Commercial</span>
-        <div class="ai-badge">Brouillon pret</div>
-      </div>
-      <div class="preview-email">
-        <div class="email-avatar" style="background: rgba(16,185,129,0.15); color: #6ee7b7;">TD</div>
-        <div class="email-info">
-          <div class="email-from">Thomas Dupont</div>
-          <div class="email-subject">Question sur vos horaires d'ouverture</div>
-        </div>
-        <span class="tag tag-info">Info</span>
-        <div class="ai-badge">Brouillon pret</div>
-      </div>
-      <div class="preview-email">
-        <div class="email-avatar" style="background: rgba(148,163,184,0.1); color: #94a3b8;">NL</div>
-        <div class="email-info">
-          <div class="email-from">Newsletter</div>
-          <div class="email-subject">Offre speciale - profitez de -50% ce week-end</div>
-        </div>
-        <span class="tag tag-inutile">Inutile</span>
-        <div style="font-size: 0.75rem; color: var(--gray);">Archive</div>
-      </div>
+    <div class="preview-email">
+      <div class="email-avatar" style="background: rgba(79,142,247,0.15); color: #7db8fa;">SL</div>
+      <div class="email-info"><div class="email-from">Sophie Laurent</div><div class="email-subject">Proposition de partenariat commercial</div></div>
+      <span class="tag tag-commercial">Commercial</span>
+      <div class="ai-badge">Brouillon pret</div>
+    </div>
+    <div class="preview-email">
+      <div class="email-avatar" style="background: rgba(16,185,129,0.15); color: #6ee7b7;">TD</div>
+      <div class="email-info"><div class="email-from">Thomas Dupont</div><div class="email-subject">Question sur vos horaires d'ouverture</div></div>
+      <span class="tag tag-info">Info</span>
+      <div class="ai-badge">Brouillon pret</div>
+    </div>
+    <div class="preview-email">
+      <div class="email-avatar" style="background: rgba(148,163,184,0.1); color: #94a3b8;">NL</div>
+      <div class="email-info"><div class="email-from">Newsletter</div><div class="email-subject">Offre speciale - profitez de -50% ce week-end</div></div>
+      <span class="tag tag-inutile">Inutile</span>
+      <div style="font-size: 0.75rem; color: var(--gray);">Archive</div>
     </div>
   </div>
 </div>
@@ -318,12 +302,10 @@
     <h2>Voyez MailPilot <span class="highlight" style="background: linear-gradient(135deg, var(--accent), var(--accent-2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">en action</span></h2>
     <p class="section-sub" style="max-width: 580px; margin: 1rem auto 0;">Cliquez sur le bouton et regardez l'IA recevoir, classer et rediger une reponse pour chaque email - en temps reel.</p>
   </div>
-
   <div class="demo-controls">
     <button id="startBtn" class="btn-primary">Lancer la demo</button>
     <button id="resetBtn" class="btn-secondary" disabled>&#8635; Recommencer</button>
   </div>
-
   <div class="demo-grid">
     <div class="panel">
       <div class="panel-header">
@@ -336,7 +318,6 @@
         <div id="emailList"><div class="empty-state">Aucun email pour l'instant. Cliquez sur "Lancer la demo" pour voir MailPilot en action.</div></div>
       </div>
     </div>
-
     <div class="ai-panel">
       <div class="panel-header">
         <svg viewBox="0 0 64 64" width="20" height="20" aria-hidden="true" style="margin-right: 4px;">
@@ -356,7 +337,6 @@
       </div>
     </div>
   </div>
-
   <div class="completion-stats" id="completionStats">
     <div class="completion-title">&#10024; Demo terminee</div>
     <p style="color: var(--gray); max-width: 480px; margin: 0 auto;">Voila ce que MailPilot fait pour vous, sur chaque email recu, 24h/24, sans intervention.</p>
@@ -366,7 +346,7 @@
       <div class="stat-item"><div class="num" id="finalTime">0s</div><div class="lbl">temps total</div></div>
     </div>
     <div class="completion-cta">
-      <a href="https://mailpilot-production-981d.up.railway.app/login" class="btn-primary">&#128640; Acceder a l'app</a>
+      <a href="https://mailpilot-production-981d.up.railway.app/register" class="btn-primary">&#128640; S'inscrire gratuitement</a>
       <button class="btn-secondary" onclick="resetDemo()">&#8635; Relancer la demo</button>
     </div>
   </div>
@@ -401,11 +381,12 @@
 <div class="cta-section" id="contact">
   <div class="section-tag">Commencer</div>
   <h2>Pret a reprendre le controle<br>de votre boite mail ?</h2>
-  <p>Lancez la demo pour voir MailPilot en action, ou contactez-nous pour une installation sur votre vraie boite mail en moins d'une heure.</p>
+  <p>Lancez la demo pour voir MailPilot en action, ou inscrivez-vous pour une installation sur votre vraie boite mail en moins d'une heure.</p>
   <div class="hero-cta">
-    <a href="https://mailpilot-production-981d.up.railway.app/login" class="btn-primary">&#128640; Acceder a l'app</a>
-    <a href="mailto:mailpilot.contact86@gmail.com?subject=Demande%20d%27installation%20MailPilot&body=Bonjour%2C%0A%0AJ%27ai%20teste%20la%20demo%20et%20je%20souhaiterais%20une%20installation%20sur%20ma%20boite%20mail.%0A%0ANom%20%3A%0AEntreprise%20%3A%0ASecteur%20d%27activite%20%3A%0AVolume%20d%27emails%20recus%20par%20jour%20%3A%0ATelephone%20%3A%0A%0AMerci%20%21" class="btn-secondary">Nous contacter</a>
+    <a href="https://mailpilot-production-981d.up.railway.app/register" class="btn-primary">&#128640; S'inscrire gratuitement</a>
+    <a href="mailto:mailpilot.contact86@gmail.com?subject=Demande%20d%27installation%20MailPilot" class="btn-secondary">Nous contacter</a>
   </div>
+  <a href="https://mailpilot-production-981d.up.railway.app/login" class="hero-login-link" style="margin-top:1rem;">Deja client ? <span>Se connecter</span></a>
 </div>
 
 <footer>
@@ -432,32 +413,23 @@
     </div>
     <div class="modal-body">
       <p class="modal-update">Derniere mise a jour : 5 mai 2026</p>
-      <div class="modal-notice">
-        <strong>Statut du projet :</strong> MailPilot est actuellement en phase de test et de developpement. Le service n'est pas encore commercialise. Les demos proposees sont gratuites et sans engagement.
-      </div>
+      <div class="modal-notice"><strong>Statut du projet :</strong> MailPilot est actuellement en phase de test et de developpement. Le service n'est pas encore commercialise.</div>
       <h3>1. Editeur du site</h3>
-      <p>Le present site <strong>mailpilote.vercel.app</strong> est edite a titre personnel par :</p>
       <div class="modal-info-block">
         <p><strong>Thomas RIBREAU</strong></p>
-        <p>6 rue du Sanital</p>
-        <p>86100 Chatellerault, France</p>
-        <p>Telephone : <a href="tel:+33659512712">06 59 51 27 12</a></p>
+        <p>6 rue du Sanital, 86100 Chatellerault, France</p>
         <p>Email : <a href="mailto:mailpilot.contact86@gmail.com">mailpilot.contact86@gmail.com</a></p>
       </div>
-      <h3>2. Directeur de la publication</h3>
-      <p>Le directeur de la publication du Site est <strong>Thomas RIBREAU</strong>.</p>
-      <h3>3. Hebergement</h3>
+      <h3>2. Hebergement</h3>
       <div class="modal-info-block">
-        <p><strong>Vercel Inc.</strong></p>
-        <p>440 N Barranca Ave #4133, Covina, CA 91723, Etats-Unis</p>
-        <p>Site : <a href="https://vercel.com" target="_blank" rel="noopener">vercel.com</a></p>
+        <p><strong>Vercel Inc.</strong> — <a href="https://vercel.com" target="_blank" rel="noopener">vercel.com</a></p>
       </div>
-      <h3>4. Propriete intellectuelle</h3>
-      <p>L'ensemble des elements presents sur le Site est la propriete exclusive de Thomas RIBREAU. Toute reproduction non autorisee est interdite.</p>
-      <h3>5. Donnees personnelles (RGPD)</h3>
-      <p>Le Site ne collecte aucune donnee personnelle de maniere automatique. Les donnees communiquees par email sont utilisees uniquement pour repondre a votre demande.</p>
-      <h3>6. Contact</h3>
-      <p>Pour toute question : <a href="mailto:mailpilot.contact86@gmail.com">mailpilot.contact86@gmail.com</a>.</p>
+      <h3>3. Propriete intellectuelle</h3>
+      <p>L'ensemble des elements du Site est la propriete exclusive de Thomas RIBREAU.</p>
+      <h3>4. Donnees personnelles (RGPD)</h3>
+      <p>Le Site ne collecte aucune donnee personnelle automatiquement. Les donnees communiquees sont utilisees uniquement pour repondre a votre demande.</p>
+      <h3>5. Contact</h3>
+      <p><a href="mailto:mailpilot.contact86@gmail.com">mailpilot.contact86@gmail.com</a></p>
     </div>
   </div>
 </div>
@@ -465,39 +437,34 @@
 <script>
 const emails = [
   { id: 1, from: 'Marc Rousseau', initials: 'MR', avatarColor: 'rgba(239,68,68,0.18)', avatarText: '#f87171', time: '09:42', subject: 'URGENT - Systeme hors service depuis ce matin', category: 'urgent', categoryLabel: 'Urgent',
-    draft: "Bonjour Marc,\n\nJe viens de prendre connaissance de votre message et je comprends l'urgence de la situation.\n\nNotre equipe technique est immediatement mobilisee pour diagnostiquer le probleme. Je vous appelle dans les 15 prochaines minutes.\n\nA tout de suite,\nThomas" },
+    draft: "Bonjour Marc,\n\nJe viens de prendre connaissance de votre message et je comprends l'urgence.\n\nNotre equipe est immediatement mobilisee. Je vous appelle dans les 15 prochaines minutes.\n\nA tout de suite,\nThomas" },
   { id: 2, from: 'Sophie Laurent', initials: 'SL', avatarColor: 'rgba(79,142,247,0.18)', avatarText: '#7db8fa', time: '09:43', subject: "Demande d'information sur vos services", category: 'commercial', categoryLabel: 'Commercial',
-    draft: "Bonjour Sophie,\n\nMerci beaucoup pour votre interet.\n\nPour mieux comprendre vos besoins, je vous propose un echange de 20 minutes en visio cette semaine.\n\nAu plaisir d'echanger,\nThomas" },
+    draft: "Bonjour Sophie,\n\nMerci pour votre interet.\n\nJe vous propose un echange de 20 minutes en visio cette semaine pour mieux cerner vos besoins.\n\nAu plaisir,\nThomas" },
   { id: 3, from: 'Thomas Dupont', initials: 'TD', avatarColor: 'rgba(16,185,129,0.18)', avatarText: '#6ee7b7', time: '09:44', subject: "Question sur vos horaires d'ouverture", category: 'info', categoryLabel: 'Info',
-    draft: "Bonjour Thomas,\n\nMerci pour votre message.\n\nNos horaires sont les suivants :\n- Lundi au vendredi : 9h00 - 18h30\n- Samedi : 9h00 - 12h30\n\nBien cordialement,\nThomas" },
-  { id: 4, from: 'Promo Newsletter', initials: 'PN', avatarColor: 'rgba(148,163,184,0.12)', avatarText: '#94a3b8', time: '09:45', subject: 'Offre flash : -50% ce week-end seulement !', category: 'inutile', categoryLabel: 'Inutile', draft: null }
+    draft: "Bonjour Thomas,\n\nNos horaires :\n- Lundi-vendredi : 9h00-18h30\n- Samedi : 9h00-12h30\n\nBien cordialement,\nThomas" },
+  { id: 4, from: 'Promo Newsletter', initials: 'PN', avatarColor: 'rgba(148,163,184,0.12)', avatarText: '#94a3b8', time: '09:45', subject: 'Offre flash : -50% ce week-end !', category: 'inutile', categoryLabel: 'Inutile', draft: null }
 ];
 
 const $ = (id) => document.getElementById(id);
 const sleep = (ms) => new Promise(r => setTimeout(r, ms));
-let isRunning = false;
-let demoStartTime = 0;
+let isRunning = false, demoStartTime = 0;
 
 function fmtTime() {
-  const elapsed = Date.now() - demoStartTime;
-  const s = Math.floor(elapsed / 1000);
-  const ms = Math.floor((elapsed % 1000) / 10);
-  return '+' + String(s).padStart(2, '0') + '.' + String(ms).padStart(2, '0');
+  const e = Date.now() - demoStartTime;
+  return '+' + String(Math.floor(e/1000)).padStart(2,'0') + '.' + String(Math.floor((e%1000)/10)).padStart(2,'0');
 }
-
 function addLog(icon, text) {
   const log = $('aiLog');
   if (log.querySelector('div[style*="italic"]')) log.innerHTML = '';
-  const entry = document.createElement('div');
-  entry.className = 'log-entry';
-  entry.innerHTML = '<span class="log-time">' + fmtTime() + '</span><span class="log-icon">' + icon + '</span><span class="log-text">' + text + '</span>';
-  log.appendChild(entry);
-  requestAnimationFrame(() => entry.classList.add('show'));
+  const e = document.createElement('div');
+  e.className = 'log-entry';
+  e.innerHTML = '<span class="log-time">'+fmtTime()+'</span><span class="log-icon">'+icon+'</span><span class="log-text">'+text+'</span>';
+  log.appendChild(e);
+  requestAnimationFrame(() => e.classList.add('show'));
   log.scrollTop = log.scrollHeight;
 }
-
-function setAiStatus(active, text) { $('aiStatus').textContent = text; $('aiDot').classList.toggle('active', active); }
-function setInboxStatus(active, text) { $('inboxStatus').textContent = text; $('inboxDot').classList.toggle('active', active); }
+function setAiStatus(a, t) { $('aiStatus').textContent = t; $('aiDot').classList.toggle('active', a); }
+function setInboxStatus(a, t) { $('inboxStatus').textContent = t; $('inboxDot').classList.toggle('active', a); }
 
 function createEmailRow(email) {
   const list = $('emailList');
@@ -505,7 +472,7 @@ function createEmailRow(email) {
   const div = document.createElement('div');
   div.className = 'email cat-' + email.category;
   div.id = 'email-' + email.id;
-  div.innerHTML = '<div class="email-avatar" style="background: ' + email.avatarColor + '; color: ' + email.avatarText + ';">' + email.initials + '</div><div class="email-info"><div class="email-row"><span class="email-from">' + email.from + '</span><span class="email-time">' + email.time + '</span></div><div class="email-subject">' + email.subject + '</div><div class="email-meta"><span class="tag tag-' + email.category + '" id="tag-' + email.id + '">' + email.categoryLabel + '</span>' + (email.draft ? '<span class="draft-indicator" id="draft-ind-' + email.id + '">Brouillon pret</span>' : '<span class="archived-tag" id="arch-' + email.id + '">Archive automatiquement</span>') + '</div></div>';
+  div.innerHTML = '<div class="email-avatar" style="background:'+email.avatarColor+';color:'+email.avatarText+';">'+email.initials+'</div><div class="email-info"><div class="email-row"><span class="email-from">'+email.from+'</span><span class="email-time">'+email.time+'</span></div><div class="email-subject">'+email.subject+'</div><div class="email-meta"><span class="tag tag-'+email.category+'" id="tag-'+email.id+'">'+email.categoryLabel+'</span>'+(email.draft?'<span class="draft-indicator" id="draft-ind-'+email.id+'">Brouillon pret</span>':'<span class="archived-tag" id="arch-'+email.id+'">Archive</span>')+'</div></div>';
   list.appendChild(div);
   requestAnimationFrame(() => div.classList.add('show'));
   $('tabCount').textContent = list.querySelectorAll('.email').length;
@@ -519,37 +486,33 @@ async function typeWriter(text, container) {
   for (let i = 0; i < text.length; i++) {
     cursor.insertAdjacentText('beforebegin', text[i]);
     const ch = text[i];
-    let delay = 8;
-    if (ch === '\n') delay = 60;
-    else if (ch === '.' || ch === ',' || ch === '!' || ch === '?') delay = 50;
-    else if (ch === ' ') delay = 12;
-    await sleep(delay);
+    await sleep(ch==='\n'?60:ch==='.'||ch===','?50:ch===' '?12:8);
   }
   cursor.remove();
 }
 
 async function processEmail(email) {
-  const row = $('email-' + email.id);
+  const row = $('email-'+email.id);
   row.classList.add('processing');
   setAiStatus(true, 'Analyse en cours');
-  addLog('📥', 'Nouveau mail detecte de <strong>' + email.from + '</strong>');
+  addLog('📥', 'Nouveau mail de <strong>'+email.from+'</strong>');
   await sleep(700);
-  addLog('🧠', 'Analyse du contenu en cours...');
+  addLog('🧠', 'Analyse du contenu...');
   await sleep(1400);
-  addLog('🏷', 'Categorie identifiee : <span class="highlight-' + email.category + '">' + email.categoryLabel.toUpperCase() + '</span>');
-  $('tag-' + email.id).classList.add('show');
+  addLog('🏷', 'Categorie : <span class="highlight-'+email.category+'">'+email.categoryLabel.toUpperCase()+'</span>');
+  $('tag-'+email.id).classList.add('show');
   row.classList.remove('processing');
   row.classList.add('processed');
   await sleep(500);
   if (email.draft) {
-    addLog('✍', 'Generation de la reponse adaptee...');
-    setAiStatus(true, 'Redaction du brouillon');
+    addLog('✍', 'Generation de la reponse...');
+    setAiStatus(true, 'Redaction');
     await typeWriter(email.draft, $('draftContent'));
-    addLog('✅', 'Brouillon enregistre dans la conversation');
-    $('draft-ind-' + email.id).classList.add('show');
+    addLog('✅', 'Brouillon enregistre');
+    $('draft-ind-'+email.id).classList.add('show');
   } else {
-    addLog('📁', 'Pas de reponse necessaire - mail archive');
-    $('arch-' + email.id).classList.add('show');
+    addLog('📁', 'Archive automatiquement');
+    $('arch-'+email.id).classList.add('show');
   }
   setAiStatus(false, 'En veille');
   await sleep(800);
@@ -558,19 +521,17 @@ async function processEmail(email) {
 async function runDemo() {
   if (isRunning) return;
   isRunning = true;
-  $('startBtn').disabled = true;
-  $('resetBtn').disabled = true;
+  $('startBtn').disabled = true; $('resetBtn').disabled = true;
   $('completionStats').classList.remove('show');
   resetVisuals();
   demoStartTime = Date.now();
   setInboxStatus(true, 'Surveillance active');
-  setAiStatus(false, 'En veille');
   $('aiLog').innerHTML = '';
-  addLog('🚀', 'MailPilot connecte a votre boite Gmail');
+  addLog('🚀', 'MailPilot connecte a Gmail');
   await sleep(800);
   let draftCount = 0;
   for (const email of emails) {
-    addLog('📨', 'Email entrant detecte...');
+    addLog('📨', 'Email entrant...');
     await sleep(400);
     createEmailRow(email);
     await sleep(700);
@@ -580,58 +541,31 @@ async function runDemo() {
   }
   setInboxStatus(false, 'Tous les emails traites');
   setAiStatus(false, 'Inactif');
-  const totalSec = ((Date.now() - demoStartTime) / 1000).toFixed(0);
+  const totalSec = ((Date.now()-demoStartTime)/1000).toFixed(0);
   $('finalEmailCount').textContent = emails.length;
   $('finalDraftCount').textContent = draftCount;
-  $('finalTime').textContent = totalSec + 's';
+  $('finalTime').textContent = totalSec+'s';
   $('completionStats').classList.add('show');
-  $('resetBtn').disabled = false;
-  $('startBtn').disabled = false;
+  $('resetBtn').disabled = false; $('startBtn').disabled = false;
   isRunning = false;
 }
 
 function resetVisuals() {
-  $('emailList').innerHTML = '<div class="empty-state">Aucun email pour l\'instant. Cliquez sur "Lancer la demo" pour voir MailPilot en action.</div>';
-  $('aiLog').innerHTML = '<div style="text-align: center; color: var(--gray-dark); font-size: 0.85rem; padding: 2rem 1rem; font-style: italic;">En attente du premier email...</div>';
-  $('draftContent').innerHTML = '<span class="draft-empty">Le brouillon genere par l\'IA s\'affichera ici en temps reel.</span>';
+  $('emailList').innerHTML = '<div class="empty-state">Cliquez sur "Lancer la demo" pour voir MailPilot en action.</div>';
+  $('aiLog').innerHTML = '<div style="text-align:center;color:var(--gray-dark);font-size:0.85rem;padding:2rem 1rem;font-style:italic;">En attente...</div>';
+  $('draftContent').innerHTML = '<span class="draft-empty">Le brouillon s\'affichera ici en temps reel.</span>';
   $('tabCount').textContent = '0';
   $('completionStats').classList.remove('show');
-  setInboxStatus(false, 'En attente');
-  setAiStatus(false, 'Inactif');
+  setInboxStatus(false, 'En attente'); setAiStatus(false, 'Inactif');
 }
-
-function resetDemo() {
-  if (isRunning) return;
-  resetVisuals();
-  $('startBtn').disabled = false;
-  $('resetBtn').disabled = true;
-}
-
-function goLaunchDemo(e) {
-  if (e) e.preventDefault();
-  document.getElementById('demo-section').scrollIntoView({behavior: 'smooth', block: 'start'});
-  setTimeout(() => { if (!isRunning) runDemo(); }, 700);
-}
-
+function resetDemo() { if(isRunning) return; resetVisuals(); $('startBtn').disabled=false; $('resetBtn').disabled=true; }
+function goLaunchDemo(e) { if(e) e.preventDefault(); document.getElementById('demo-section').scrollIntoView({behavior:'smooth',block:'start'}); setTimeout(()=>{if(!isRunning)runDemo();},700); }
 $('startBtn').addEventListener('click', runDemo);
 $('resetBtn').addEventListener('click', resetDemo);
 
-function openLegal(e) {
-  if (e) e.preventDefault();
-  const modal = document.getElementById('legalModal');
-  modal.classList.add('show');
-  document.body.style.overflow = 'hidden';
-}
-function closeLegal(e) {
-  if (e && e.target.id !== 'legalModal' && e.type === 'click' && e.target.tagName !== 'BUTTON') return;
-  const modal = document.getElementById('legalModal');
-  modal.classList.remove('show');
-  document.body.style.overflow = '';
-}
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') closeLegal();
-});
+function openLegal(e) { if(e) e.preventDefault(); document.getElementById('legalModal').classList.add('show'); document.body.style.overflow='hidden'; }
+function closeLegal(e) { if(e&&e.target.id!=='legalModal'&&e.type==='click'&&e.target.tagName!=='BUTTON') return; document.getElementById('legalModal').classList.remove('show'); document.body.style.overflow=''; }
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeLegal(); });
 </script>
-
 </body>
 </html>
